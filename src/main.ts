@@ -17,6 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(err => console.error(err));
 });
 
-bootstrapApplication(AppComponent, {
-    providers: [provideCharts(withDefaultRegisterables())],
-}).catch((err) => console.error(err));
+// bootstrapApplication(AppComponent, {
+//     providers: [provideCharts(withDefaultRegisterables())],
+// }).catch((err) => console.error(err));

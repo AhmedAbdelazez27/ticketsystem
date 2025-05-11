@@ -57,5 +57,10 @@ export class AppComponent {
         if (event instanceof NavigationEnd || event instanceof NavigationCancel || event instanceof NavigationError) {
             this.service.App.AppLoader = false;
         }
-    }
+    };
+
+    toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
 }
