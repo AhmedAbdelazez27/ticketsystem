@@ -1,0 +1,116 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "BMSDESK": {
+      "projectType": "application",
+      "schematics": {},
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "allowedCommonJsDependencies": [
+              "rxjs",
+              "rxjs-compat",
+              "ng2-flatpickr",
+              "ng2-charts",
+              "chart.js"
+            ],
+            "outputPath": {
+              "base": "dist",
+              "media": "assetsimages"
+            },
+            "index": "index.html",
+            "polyfills": ["src/polyfills.ts"],
+            "tsConfig": "tsconfig.json",
+            "assets": [
+              //static folders/files path
+              "src/images/favicon.ico",
+              //,"src/assets"
+              "src/assets/images",
+              "src/.htaccess", // for rewrite url in php server
+              "src/Web.config" // for rewrite url in window server
+            ],
+            "styles": [
+              "src/assets/css/font-awesome.min.css",
+              "src/assets/css/flatpickr.css",
+              "src/assets/kendo/kendo.common-material.min.css",
+              "src/assets/kendo/kendo.material.min.css",
+              //"src/assets/css/tooltipster.min.css",
+              "src/assets/css/jquery.webui-popover.min.css",
+              "src/assets/css/common.css",
+              "src/assets/css/style.css"
+            ],
+            "scripts": [
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/FileSaver.min.js",
+              "src/assets/js/base64js.min.js",
+              "src/assets/js/bootstrap-dropdown.min.js",
+              "src/assets/kendo/kendo.all.min.js",
+              //"src/assets/js/tooltipster.min.js",
+              "src/assets/js/jquery.webui-popover.min.js"
+              //"node_modules/flatpickr/dist/plugins/monthSelect/index.js" //month/year flatpickr datepicker plugin
+            ],
+            "aot": false,
+            "extractLicenses": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true,
+            "browser": "src/main.ts"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "bundles", //"all"
+              "sourceMap": false,
+              //"extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "8mb",
+                  "maximumError": "8mb"
+                }
+              ],
+              "optimization": true
+            }
+          },
+          "defaultConfiguration": ""
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "options": {
+            "buildTarget": "BMSDESK:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "BMSDESK:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular/build:extract-i18n",
+          "options": {
+            "buildTarget": "BMSDESK:build"
+          }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false
+  }
+}

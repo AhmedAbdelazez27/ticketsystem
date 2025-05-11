@@ -1,0 +1,35 @@
+﻿
+<modal-dialog #modalSolution_List [backDrop]="false" modalClass="modal-lg" [modalHeader]="'lblSolutionList' | translate:service.CL ">
+    <div class="main-panel" style="width:100%;">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-12 stretch-card">
+                    <div class="card">
+                        <div class="card-body1">
+                            <div class="table-header">
+                                <div>
+                                    <button type="button" (click)="SelectRow()" class="btn btn-sm btn-primary" title="{{'lblSelectSolution'| translate:service.CL}}"><i class="fa fa-save"></i></button>
+                                    <button type="button" (click)="Close()" class="btn btn-sm btn-danger" title="{{'lblClose'| translate:service.CL}} "><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                            <div style="position:relative;">
+                                <ticket-commongrid [ModuleType]="'solution'" *ngIf="allItems.length > 0" [records]="allItems" [gridfilter]="gridFilter" 
+                                                   [pagesize]="10" (change)="pageChanged($event)" [ShowSorting]="true"
+                                                   [PagingType]="'nextprevnumberadvanced'" [ShowPagesize]="true" [ShowFilter]="true" [ShowCheckbox]="true"
+                                                   [Edit]="true" (EditRow)="EditRowDBClick($event)">
+                                </ticket-commongrid>
+                                <div class="nodata" *ngIf="!isLoading && allItems.length == 0">
+                                    <span>{{'lblNoData'| translate:service.CL}}</span>
+                                </div>
+                            </div>
+                            <div *ngIf="isLoading" class="overlay-inner">
+                                <i class="fa fa-circle-notch fa-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-dialog>
+

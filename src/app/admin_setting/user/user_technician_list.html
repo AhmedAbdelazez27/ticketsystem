@@ -1,0 +1,126 @@
+﻿
+
+<modal-dialog #modalUser_Technician [backDrop]="false" modalClass="modal-lg" [modalHeader]="(isTechnician ? 'lblSelectTechnician' : 'lblSelectUser') | translate:service.CL ">
+    <div class="main-panel" style="width:100%;">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-lg-12 stretch-card">
+                    <div class="card">
+                        <div class="card-body1">
+                            <div class="table-header">
+                                <div>
+                                    <button type="button" (click)="SelectRow()" class="btn btn-sm btn-primary" title="{{'lblSelectUser'| translate:service.CL}}"><i class="fa fa-save"></i></button>
+                                    <button type="button" (click)="ViewRow('',0)" class="btn btn-sm btn-info" title="{{'lblViewUserDetail'| translate:service.CL}}"><i class="fa fa-id-card"></i></button>                                    
+                                    <button type="button" (click)="Close()" class="btn btn-sm btn-danger" title="{{'lblClose'| translate:service.CL}} "><i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div style="position:relative;">
+                                <commongrid *ngIf="allItems.length > 0" [records]="allItems" [gridfilter]="gridFilter"
+                                            [pagesize]="10" (change)="pageChanged($event)" [ShowSorting]="true"
+                                            [PagingType]="'nextprevnumberadvanced'" [ShowPagesize]="true" [ShowFilter]="true" [ShowCheckbox]="true"
+                                            [Edit]="true" (EditRow)="EditRowDBClick($event)">
+                                </commongrid>
+                                <div class="nodata" *ngIf="!isLoading && allItems.length == 0">
+                                    <span>{{'lblNoData'| translate:service.CL}}</span>
+                                </div>
+                            </div>
+                            <div *ngIf="isLoading" class="overlay-inner">
+                                <i class="fa fa-circle-notch fa-spin"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</modal-dialog>
+
+<modal-dialog #modalViewUser [backDrop]="true" modalClass="modal-lg" [modalHeader]="'lblViewUser' | translate:service.CL">
+    <div class="modal-body">
+        <div *ngIf="selectedUser" class="form-box row">
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblDisplayName'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.DisplayName}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblUserName'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.UserName}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblEmail'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.Email}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblRoleName'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.RoleName}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblPhoneNo'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.PhoneNo}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblCity'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.City}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblState'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.State}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblCountry'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.Country}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblPincode'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.Pincode}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblJobTitle'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.JobTitle}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblOrganization'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.Organization}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblAddress'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.Address}}</b></div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6">
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label">{{'lblDescription'| translate:service.CL}}</label>
+                    <div class="col-md-8 col-form-label"><b>{{selectedUser.Description}}</b></div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="modal-footer form-btn">
+        <button type="button" class="btn btn-sm btn-secondary" (click)="modalViewUser.close()">{{'btnClose'| translate:service.CL}}</button>
+    </div>
+</modal-dialog>

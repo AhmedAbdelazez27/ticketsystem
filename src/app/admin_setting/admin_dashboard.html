@@ -1,0 +1,258 @@
+﻿
+<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i><span>{{'lblAdminDashboard'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper admin-header">        
+        <h4 class="card-title1 mb-4">{{'lblBasicHelpdesk'| translate:service.CL}}</h4>
+        <div class="row">
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-info-light bmsTooltip" data-content="Status is used to indicate progress of tickets.">
+                    <a class="card-body" routerLink="/admin/basic/status">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblStatus'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-primary-light">
+                    <a class="card-body" routerLink="/admin/basic/level">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblLevel'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-teal-light">
+                    <a class="card-body" routerLink="/admin/basic/category">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblCategory'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-warning-light">
+                    <a class="card-body" routerLink="/admin/basic/subcategory">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblSubCategory'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-dark-light">
+                    <a class="card-body" routerLink="/admin/basic/item">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblItem'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-pink-light">
+                    <a class="card-body" routerLink="/admin/basic/department">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblDepartment'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-pink-light">
+                    <a class="card-body" routerLink="/admin/basic/request_type">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblRequestType'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-dark-light">
+                    <a class="card-body" routerLink="/admin/basic/impact">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblImpact'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-warning-light">
+                    <a class="card-body" routerLink="/admin/basic/urgency">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblUrgency'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-teal-light">
+                    <a class="card-body" routerLink="/admin/basic/priority">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblPriority'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-primary-light">
+                    <a class="card-body" routerLink="/admin/basic/location">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblLocation'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-info-light">
+                    <a class="card-body" routerLink="/admin/basic/notification">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblAnnouncement'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <h4 class="card-title1 mb-4 mt-3">{{'lblGeneralSetting'| translate:service.CL}}</h4>
+        <div class="row">
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-info-light">
+                    <a class="card-body" routerLink="/admin/general/app_setting">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblApplicationSetting'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-primary-light">
+                    <a class="card-body" routerLink="/admin/general/agent_setting">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblAgentSetting'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-teal-light">
+                    <a class="card-body" routerLink="/admin/general/client_setting">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblClientSetting'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card bg-warning-light">
+                    <a class="card-body" routerLink="/admin/general/tech_autoassign">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblAgentAutoAssign'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <h4 class="card-title1 mb-4 mt-3">{{'lblMailSetting'| translate:service.CL}}</h4>
+        <div class="row">
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-info-light">
+                    <a class="card-body" routerLink="/admin/mail/outgoing_server">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblOutgoingEmailServer'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <h4 class="card-title1 mb-4 mt-3">{{'lblUserManagement'| translate:service.CL}}</h4>
+        <div class="row">
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card" *ngIf="service?.Account?.Is_Agent && service?.Account?.Is_Client">
+                <div class="card  bg-info-light">
+                    <a class="card-body" routerLink="/admin/user_admin">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblAdmins'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-primary-light">
+                    <a class="card-body" routerLink="/admin/user_agent">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblAgents'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-teal-light">
+                    <a class="card-body" routerLink="/admin/user_client">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblClients'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-warning-light">
+                    <a class="card-body" routerLink="/admin/roles">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblRoles'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="card-title1 mb-4 mt-3">{{'lblCompanyLogo'| translate:service.CL}}</h4>
+        <div class="row">
+            <div class="col-6 col-md-2 col-sm-6 grid-margin stretch-card">
+                <div class="card  bg-info-light">
+                    <a class="card-body" routerLink="/admin/logo">
+                        <div class="bookmark-icon">
+                            <i class="fa fa-bookmark float-right icon-md text-white"></i>
+                        </div>
+                        <h6 class="card-subtitle mb-1 mt-1"><span class="text-white">{{'lblLogoAndTitle'| translate:service.CL}}</span></h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

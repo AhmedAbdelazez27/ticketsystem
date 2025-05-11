@@ -1,0 +1,101 @@
+﻿
+<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">{{'lblUrgencyList'| translate:service.CL}}</div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/admin">{{'lblAdminSetting'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <span>{{'lblUrgency'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-header">
+                            <div>
+                                <button type="button" class="btn btn-sm btn-secondary" title="{{'tlpRefresh'| translate:service.CL}}" (click)="txtSearch='';refreshGrid();"><i class="fa fa-sync"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Add_Admin" (click)="AddRow()" class="btn btn-sm btn-warning" title="{{'tlpAddNew'| translate:service.CL}}"><i class="fa fa-plus"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Edit_Admin" (click)="EditRow()" class="btn btn-sm btn-primary" title="{{'tlpEdit'| translate:service.CL}}"><i class="fa fa-pencil-alt"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Delete_Admin" (click)="DeleteRow()" class="btn btn-sm btn-danger" title="{{'tlpDelete'| translate:service.CL}}"><i class="fa fa-trash"></i></button>
+                            </div>
+                            <div class="table-filter">
+                                <input type="text" *ngIf="service?.Account?.Is_Admin_Search" class="form-control form-control-sm" name="filter" placeholder="{{'phSearch'| translate:service.CL}}" [(ngModel)]="txtSearch" (keyup)="service.App.searchFilter.emit($event.target.value);">
+                                <div class="dropdown dropleft" *ngIf="service?.Account?.Is_ColumnChooser_Visible">
+                                    <button class="btn btn-sm btn-secondary" data-toggle="dropdown" title="{{'tlpColumnChooser'| translate:service.CL}}" type="button">
+                                        <i class="fa fa-cog"></i>
+                                    </button>
+                                    <ul class="dropdown-menu" (click)="$event.stopPropagation()">
+                                        <li *ngFor="let filter of gridFilter;let i = index;" class="dropdown-item">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="chkfltr-{{i}}" [(ngModel)]="filter.Is_Visible" (change)="filter.Is_Visible != $event.target.value;">
+                                                <label class="custom-control-label" for="chkfltr-{{i}}">
+                                                    <span>{{filter.DisplayText | translate:service.CL}}</span>
+                                                </label>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="position:relative;">
+                            <commongrid *ngIf="allItems.length > 0" [records]="allItems" [gridfilter]="gridFilter" [SearchText]="txtSearch"
+                                        [pagesize]="10" (change)="pageChanged($event)" [ShowSorting]="true"
+                                        [PagingType]="'nextprevnumberadvanced'" [ShowPagesize]="true" [ShowFilter]="true" [ShowCheckbox]="true"
+                                        [Edit]="true" (EditRow)="service?.Account?.Is_EditRow_On_DoubleClick && EditRowDBClick($event)">
+                            </commongrid>
+
+                            <div class="nodata" *ngIf="!isLoading && allItems.length == 0">
+                                <span>{{'lblNoData'| translate:service.CL}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<modal-dialog #modalAdd [backDrop]="false" modalClass="modal-md" [modalHeader]="(isEdit ? 'lblUpdateUrgency' : 'lblAddUrgency') | translate:service.CL">
+    <form [formGroup]="UrgencyForm" (ngSubmit)="UrgencyForm.valid && SaveUrgency()" #f="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="form-box row">
+                <div class="col-12 form-group" [ngClass]="{'has-error': f.submitted && !UrgencyForm.controls.Name.valid}">
+                    <label>{{'lblUrgencyName'| translate:service.CL}}</label>
+                    <input #focus type="text" class="form-control" formControlName="Name" autofocus placeholder="{{'lblEnter'| translate:service.CL}} {{'lblUrgencyName'| translate:service.CL}}" />
+                </div>
+                <div class="col-12 form-group">
+                    <label>{{'lblDescription'| translate:service.CL}}</label>
+                    <textarea class="form-control" formControlName="Description" placeholder="{{'lblEnter'| translate:service.CL}} {{'lblDescription'| translate:service.CL}}"></textarea>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input id="frmIs_Active" type="checkbox" formControlName="Is_Active" class="custom-control-input">
+                        <label class="custom-control-label" for="frmIs_Active">{{'lblIsActive'| translate:service.CL}}</label>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input id="frmIs_Default" type="checkbox" formControlName="Is_Default" class="custom-control-input">
+                        <label class="custom-control-label" for="frmIs_Default">{{'lblIsDefault'| translate:service.CL}}</label>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 form-group">
+                    <div class="custom-control custom-checkbox">
+                        <input id="frmIs_Client_Visible" type="checkbox" formControlName="Is_Client_Visible" class="custom-control-input">
+                        <label class="custom-control-label" for="frmIs_Client_Visible">{{'lblIsClientVisible'| translate:service.CL}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer form-btn">
+            <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+            <button type="submit" class="btn btn-sm btn-teal" (click)="Is_SaveAndAddNew = true;"><i class="fa fa-save mr-1"></i><span class="save-plus"><i class="fa fa-plus"></i></span> {{'btnSaveAndNew'| translate:service.CL}}</button>
+            <button type="button" class="btn btn-sm btn-secondary" (click)="modalAdd.close()"><i class="fa fa-times"></i> {{'btnCancel'| translate:service.CL}}</button>
+        </div>
+    </form>
+</modal-dialog>

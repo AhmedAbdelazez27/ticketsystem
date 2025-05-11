@@ -1,0 +1,92 @@
+﻿
+<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">{{'lblApplicationSetting'| translate:service.CL}}</div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/admin">{{'lblAdminSetting'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <span>{{'lblApplicationSetting'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="ApplicationSettingForm" (ngSubmit)="ApplicationSettingForm.valid && SaveApplicationSetting()" #f="ngForm" novalidate>
+                            <div class="card-title">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                            </div>
+                            <div class="modal-body1">
+                                <div class="form-box row">
+                                    <!--<div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_EasyAddOn_Visible" type="checkbox" formControlName="Is_EasyAddOn_Visible" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_EasyAddOn_Visible">Enable EasyAdd Functionality In Ticket Detail</label>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Admin_Search" type="checkbox" formControlName="Is_Admin_Search" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Admin_Search">{{'lblEnableCommonSearchInAdmin'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Pickup" type="checkbox" formControlName="Is_Pickup" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Pickup">{{'lblEnablePickupFunctionInTicket'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_AssignTo_Dropdown" type="checkbox" formControlName="Is_AssignTo_Dropdown" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_AssignTo_Dropdown">{{'lblEnableAssignAgentInTicket'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Close_Ticket" type="checkbox" formControlName="Is_Close_Ticket" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Close_Ticket">{{'lblEnableCloseTicket'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Ticket_StartPage" type="checkbox" formControlName="Is_Ticket_StartPage" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Ticket_StartPage">{{'lblIsTicketListAsStartPage'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_EditRow_On_DoubleClick" type="checkbox" formControlName="Is_EditRow_On_DoubleClick" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_EditRow_On_DoubleClick">{{'lblIsEditRowOnDoubleClick'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <label>{{'lblDefaultLanguage'| translate:service.CL}}</label>
+                                        <select class="form-control col-md-6" formControlName="DefaultLanguage">
+                                            <option value="">{{'lblSelect'| translate:service.CL}}</option>
+                                            <option *ngFor="let item of LanguageList" [value]="item.Value">{{item.Key}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <label>{{'lblDefaultPassword'| translate:service.CL}}</label>
+                                        <input type="text" class="form-control col-md-6" formControlName="DefaultPassword" placeholder="Enter Default Password" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer form-btn mt-4 pb-0 prl-0">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

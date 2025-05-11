@@ -1,0 +1,513 @@
+﻿<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">
+            {{'lblEditTicket'| translate:service.CL}}
+        </div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i
+                class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/ticket">{{'lblTicket'| translate:service.CL}}</a> <i
+                class="fa fa-angle-double-right"></i>
+            <span>{{'lblEditTicket'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="TicketForm" (ngSubmit)="TicketForm.valid && SaveTicket()" #f="ngForm"
+                            novalidate>
+                            <div class="card-title">
+                                <button type="submit" class="btn btn-sm btn-primary tlp"><i
+                                        class="fa fa-save"></i></button>
+                                <button type="submit" class="btn btn-sm btn-primary tlp"
+                                    (click)="Is_SaveAndclose = true;">
+                                    <i class="fa fa-save"></i>
+                                    <span class="save-close"><i class="fa fa-times"></i></span>
+                                </button>
+                                <button type="button" *ngIf="service?.Account?.Is_Delete_Ticket" (click)="DeleteRow()"
+                                    class="btn btn-sm btn-danger tlp"><i class="fa fa-trash"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Clone_Ticket" (click)="CloneTicket()"
+                                    class="btn btn-sm btn-info tlp"><i class="fa fa-clone"></i></button>
+                                <a target="_blank" *ngIf="service?.Account?.Is_Print" (click)="Print()"
+                                    class="btn btn-sm btn-info tlp"><i class="fa fa-print"></i></a>
+                                <button type="button" *ngIf="service?.Account?.Is_Close_Ticket"
+                                    (click)="OpenCloseTicket()" class="btn btn-sm btn-danger tlp"><i
+                                        class="fa fa-times"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Pickup" (click)="PickUp()"
+                                    class="btn btn-sm btn-info tlp"><i class="fa fa-shipping-fast"></i> {{'btnPickUp'|
+                                    translate:service.CL}}</button>
+                                <button type="button" class="btn btn-sm btn-secondary tlp" (click)="BackToList();"><i
+                                        class="fa fa-times"></i> {{'btnCancel'| translate:service.CL}}</button>
+                                <button [class.hide]="!Is_Show_FCR" type="button" (click)="Set_FCR(true)"
+                                    class="btn btn-sm btn-primary tlp"><i class="fa fa-bookmark"></i></button>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-xl-8">
+                                    <div class="form-box row">
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-5 col-md-3 col-form-label">{{'lblTicketID'|
+                                                    translate:service.CL}} </label>
+                                                <div class="col-7 col-md-8 col-form-label">
+                                                    <b>{{TicketForm.controls.DisplayTicketID.value}}</b>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6 text-right">
+                                            <button [class.hide]="!Is_FCR" type="button" (click)="Set_FCR(false)"
+                                                class="badge badge-primary tlp cursor">
+                                                <i class="fa fa-bookmark mr-1"></i> {{'lblFCRMarked'|
+                                                translate:service.CL}}
+                                            </button>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row"
+                                                [ngClass]="{'has-error': f.submitted && !TicketForm.controls.RequestedName.valid}">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblRequester'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <div class="input-group">
+                                                        <input type="hidden" class="form-control"
+                                                            formControlName="RequestedUser">
+                                                        <ng-template #reqTemplate let-model="item">{{model.DisplayName}}
+                                                            {{'('+ model.Email +')'}}</ng-template>
+                                                        <input #focus formControlName="RequestedName"
+                                                            typeaheadOptionField="DisplayName"
+                                                            (typeaheadNoResults)="NoRequesterFound($event)"
+                                                            (typeaheadOnSelect)="onSelectRequester($event)"
+                                                            class="form-control">
+                                                        <div class="input-append ml-1"><a
+                                                                class="btn btn-secondary btn-sm tlp"
+                                                                (click)="OpenUserList('user')"><i
+                                                                    class="fa fa-user"></i></a></div>
+                                                        <div [class.hide]="!selectedClient && TicketForm.controls.RequestedUser?.value <= 0"
+                                                            class="input-append ml-1"><a
+                                                                class="btn btn-secondary btn-sm tlp"
+                                                                (click)="ViewUser()"><i class="fa fa-id-card"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblTechnician'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <div class="input-group">
+                                                        <input type="hidden" class="form-control"
+                                                            formControlName="AssignedUser">
+                                                        <ng-template #assignTemplate
+                                                            let-model="item">{{model.DisplayName}} {{'('+ model.Email
+                                                            +')'}}</ng-template>
+                                                        <input formControlName="AssignedName"
+                                                            typeaheadOptionField="DisplayName"
+                                                            (typeaheadNoResults)="NoTechnicianFound($event)"
+                                                            (typeaheadOnSelect)="onSelectTechnician($event)"
+                                                            class="form-control">
+                                                        <div class="input-append ml-1"><a
+                                                                class="btn btn-secondary btn-sm tlp"
+                                                                (click)="OpenUserList('technician')"><i
+                                                                    class="fa fa-user"></i></a></div>
+                                                        <div class="input-append ml-1"><a
+                                                                class="btn btn-secondary btn-sm tlp"
+                                                                (click)="AssignCurrentUser()"><i
+                                                                    class="fa fa-share"></i></a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblRequestType'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="RequestTypeID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.RequestTypeList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row"
+                                                [ngClass]="{'has-error': f.submitted && !TicketForm.controls.StatusID.valid}">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblStatus'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="StatusID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.StatusList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblTicketMode'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="TicketModeID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.TicketModeList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblLevel'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="LevelID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.LevelList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblCategory'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="CategoryID"
+                                                        (change)="Change_Category($event.target.value,0)">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.CategoryList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblSubCategory'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="SubCategoryID"
+                                                        (change)="Change_SubCategory($event.target.value)">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of Filter_SubCategory_List"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblItem'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select" formControlName="ItemID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of Filter_ItemList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblImpact'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="ImpactID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.ImpactList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblPriority'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="PriorityID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.PriorityList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblUrgency'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="UrgencyID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.UrgencyList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblDepartment'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="DepartmentID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.DepartmentList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblLocation'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <select class="form-control custom-select"
+                                                        formControlName="LocationID">
+                                                        <option [ngValue]="null">{{'lblSelect'| translate:service.CL}}
+                                                        </option>
+                                                        <option *ngFor="let item of model?.LocationList"
+                                                            [value]="item.Value">{{item.Key}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6">
+                                            <div class="form-group row">
+                                                <label class="col-12 col-lg-3 col-form-label">{{'lblDueDate'|
+                                                    translate:service.CL}}</label>
+                                                <div class="col-12 col-lg-8">
+                                                    <div class="input-group datepicker">
+                                                        <!-- <ng2-flatpickr #dueDate [config]="DueDate_Config"
+                                                            formControlName="DueDate"
+                                                            altInputClass="form-control"></ng2-flatpickr> -->
+
+                                                        <mat-form-field appearance="fill">
+                                                            <mat-label>Start Date</mat-label>
+                                                            <input matInput [matDatepicker]="picker"
+                                                                placeholder="Choose a date" [(ngModel)]="dueDate">
+                                                            <mat-datepicker-toggle matSuffix
+                                                                [for]="picker"></mat-datepicker-toggle>
+                                                            <mat-datepicker #picker></mat-datepicker>
+                                                        </mat-form-field>
+
+
+                                                        <div class="input-group-append">
+                                                            <button type="button" class="btn btn-secondary btn-sm"
+                                                                (click)="service?.OpenFlatpickr(dueDate)"><i
+                                                                    class="fa fa-calendar"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-lg-6"></div>
+                                        <div class="col-12 form-group"
+                                            [ngClass]="{'has-error': f.submitted && !TicketForm.controls.Subject.valid}">
+                                            <label>{{'lblSubject'| translate:service.CL}}</label>
+                                            <input type="text" class="form-control" formControlName="Subject"
+                                                placeholder="{{'lblEnter'| translate:service.CL}} {{'lblSubject'| translate:service.CL}}" />
+                                        </div>
+                                        <div class="col-12 form-group editor-height">
+                                            <label>{{'lblDescription'| translate:service.CL}}</label>
+                                            <textarea id="txtDesc" class="form-control kendoEditor"
+                                                formControlName="Description"
+                                                placeholder="{{'lblEnter'| translate:service.CL}} {{'lblDescription'| translate:service.CL}}"></textarea>
+                                        </div>
+
+
+                                        <div class="col-12 mt-5 mb-2 d-flex justify-content-between">
+                                            <h5>{{'lblAttachments'| translate:service.CL}}</h5>
+                                            <button type="button" class="btn btn-info btn-sm"
+                                                (click)="flAttachment.click();">
+                                                <i *ngIf="isAttachLoading" class="fa fa-circle-notch fa-spin mr-1"></i>
+                                                {{'lblUploadFiles'| translate:service.CL}}
+                                            </button>
+                                            <input #flAttachment type="file" multiple (change)="fileChange($event)"
+                                                class="hide" />
+                                        </div>
+                                        <div class="col-12 form-group">
+                                            <div class="table-responsive">
+                                                <table
+                                                    class="table table-bordered table-striped small-btn table-attachment">
+                                                    <tr *ngFor="let item of AttachmentList">
+                                                        <td>
+                                                            <i class="mr-2" [ngClass]="item.Extension | fileType"></i>
+                                                            <a target="_blank"
+                                                                href="{{service?.Settings?.Base_API_URL + '/Documents/Attachments/Ticket/' + item.FileName}}">
+                                                                {{item.DisplayName}}</a>
+                                                        </td>
+                                                        <td width="4%">
+                                                            <button type="button" class="btn btn-xs btn-danger"
+                                                                (click)="RemoveAttachment(item,'old')">{{'lblRemove'|
+                                                                translate:service.CL}}</button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr *ngFor="let file of lstAttachments;let i = index;"
+                                                        class="bg-light-yellow ">
+                                                        <td>
+                                                            <i class="mr-2" [ngClass]="file.extension | fileType"></i>
+                                                            {{file.name}}
+                                                        </td>
+                                                        <td width="4%">
+                                                            <button type="button" class="btn btn-xs btn-danger"
+                                                                (click)="RemoveAttachment(file,'new')">{{'lblRemove'|
+                                                                translate:service.CL}}</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 mt-5 mb-2 d-flex justify-content-between">
+                                            <h5>{{'lblResolution'| translate:service.CL}}</h5>
+                                            <button type="button" class="btn btn-info btn-sm" (click)="FindSolution();">
+                                                <i *ngIf="isLoadingFindSolution"
+                                                    class="fa fa-circle-notch fa-spin mr-1"></i> {{'lblFindSolution'|
+                                                translate:service.CL}}
+                                            </button>
+                                        </div>
+                                        <div class="col-12 form-group editor-height">
+                                            <textarea id="txtSolDesc" class="form-control kendoEditor"
+                                                formControlName="SolutionDescription"
+                                                placeholder="{{'lblEnter'| translate:service.CL}} {{'lblResolution'| translate:service.CL}}"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-xl-4 border-left ticket-chat">
+                                    <h5 class="d-flex justify-content-between align-content-center">
+                                        {{'lblTicketChat'| translate:service.CL}}
+                                        <!--<button type="button" class="btn btn-sm btn-outline-dark" (click)="show_chat();">
+                                            <i class="fa fa-reply mr-1"></i>{{'btnReply'| translate:service.CL}}
+                                        </button>-->
+                                    </h5>
+                                    <div>
+                                        <textarea class="form-control" [(ngModel)]="txt_chat"
+                                            [ngModelOptions]="{standalone: true}" rows="4"
+                                            style="resize:vertical;min-height:82px;"
+                                            placeholder="{{'lblEnter'| translate:service.CL}} {{'lblDescription'| translate:service.CL}}"></textarea>
+                                        <div class="d-flex justify-content-between align-content-center mt-2">
+                                            <button type="button" class="btn btn-sm btn-outline-primary"
+                                                (click)="save_chat();" [disabled]="is_loading_chat">{{'btnSendReply'|
+                                                translate:service.CL}}</button>
+                                            <!--<button type="button" class="btn btn-sm btn-outline-secondary" (click)="show_chat(false);">{{'btnCancel'| translate:service.CL}}</button>-->
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive mt-3">
+                                        <table class="table table-borderless">
+                                            <tr *ngFor="let item of chat_list">
+                                                <td style="width:1%;vertical-align:top;">
+                                                    <img alt="" class="img-xs rounded-circle profile-list-pic"
+                                                        [src]="item.ProfilePicture ? (service?.Settings?.Base_API_URL + '/Documents/Profile/' + item.ProfilePicture) : '/assets/images/profile.png'" />
+                                                </td>
+                                                <td>
+                                                    <h5>{{item.DisplayName}}</h5>
+                                                    <div style="white-space:pre-wrap" [innerHTML]="item.Description">
+                                                    </div>
+                                                </td>
+                                                <td style="width:22%;vertical-align:top;">
+                                                    {{item.CreatedDate | date:'dd MMM yyyy hh:mm a'}}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div *ngIf="!chat_list.length" class="mt-3 font-15">
+                                            No chats available.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer form-btn mt-4 pb-0 prl-0">
+                                <button type="submit" class="btn btn-sm btn-primary tlp"><i
+                                        class="fa fa-save"></i></button>
+                                <button type="submit" class="btn btn-sm btn-primary tlp"
+                                    (click)="Is_SaveAndclose = true;">
+                                    <i class="fa fa-save"></i>
+                                    <span class="save-close"><i class="fa fa-times"></i></span>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-secondary tlp" (click)="BackToList();"><i
+                                        class="fa fa-times"></i> {{'btnCancel'| translate:service.CL}}</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<user-technician (onSave)="UserSelectDone($event)" #UserSelect></user-technician>
+<solution_find-list (onSelectSolution)="FindSolutionDone($event)" #modalFindSolution></solution_find-list>
+
+<modal-dialog #modalCloseTicket [backDrop]="false" modalClass="modal-md" modalHeader="Close Ticket">
+    <form [formGroup]="CloseTicketForm" (ngSubmit)="CloseTicketForm.valid && CloseTicket()" #f1="ngForm" novalidate>
+        <div class="modal-body">
+            <div class="form-box row">
+                <div class="col-12 col-md-6 form-group"
+                    [ngClass]="{'has-error': f1.submitted && !CloseTicketForm.controls.StatusID.valid}">
+                    <label>{{'lblStatus'| translate:service.CL}}</label>
+                    <select class="form-control custom-select" formControlName="StatusID" autofocus>
+                        <option value="0">{{'lblSelect'| translate:service.CL}}</option>
+                        <option *ngFor="let item of CLosedStatusList" [value]="item.StatusID">{{item.Name}}</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 form-group"
+                    [ngClass]="{'has-error': f1.submitted && !CloseTicketForm.controls.TicketCloseModeID.valid}">
+                    <label>{{'lblTicketCloseMode'| translate:service.CL}}</label>
+                    <select class="form-control custom-select" formControlName="TicketCloseModeID">
+                        <option value="0">{{'lblSelect'| translate:service.CL}}</option>
+                        <option *ngFor="let item of TicketCloseModeList" [value]="item.Value">{{item.Key}}</option>
+                    </select>
+                </div>
+                <div class="col-12 form-group">
+                    <label>{{'lblReason'| translate:service.CL}}</label>
+                    <textarea class="form-control" formControlName="StatusCloseReason"
+                        placeholder="{{'lblEnter'| translate:service.CL}} {{'lblReasonForClosedTicket'| translate:service.CL}}"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer form-btn">
+            <button type="submit" class="btn btn-teal">{{'btnCloseTicket'| translate:service.CL}}</button>
+            <button type="button" class="btn btn-secondary" (click)="modalCloseTicket.close()">{{'btnCancel'|
+                translate:service.CL}}</button>
+        </div>
+    </form>
+</modal-dialog>

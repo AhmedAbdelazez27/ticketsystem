@@ -1,0 +1,69 @@
+﻿
+
+<div *ngIf="IsLoginForm || IsForgotPwdForm" class="content-wrapper d-flex align-items-center auth login-full-bg" style="height:100%">
+    <div class="row1 w-100">
+        <div class="col-lg-4 mx-auto">
+            <div class="auth-form-dark text-left p-5">
+                <h2 *ngIf="IsLoginForm">{{'lblLogin'| translate:service.CL}}</h2>
+                <h2 *ngIf="IsForgotPwdForm">{{'lblForgotPasswordTitle'| translate:service.CL}}</h2>
+                <h4 *ngIf="IsLoginForm" class="font-weight-light">{{'lblLoginSubTitle' | translate:service.CL}}</h4>
+                <form *ngIf="IsLoginForm" class="pt-4" [formGroup]="LoginForm" (ngSubmit)="LoginForm.valid && Login()" #f="ngForm" novalidate>
+                    <div class="form-group" [ngClass]="{ 'has-error-login': f.submitted && !LoginForm.controls.username.valid }">
+                        <input type="text" autofocus class="form-control" placeholder="{{'lblUsername'| translate:service.CL}}" formControlName="username">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'has-error-login': f.submitted && !LoginForm.controls.password.valid }">
+                        <input type="password" class="form-control" placeholder="{{'lblPassword'| translate:service.CL}}" formControlName="password">
+                        <i class="fa fa-eye"></i>
+                    </div>
+                    <div class="form-group mt-4" [ngClass]="{ 'has-error-login': f.submitted && !LoginForm.controls.language.valid }">
+                        <div class="dropdown">
+                            <button type="button" class="btn btn-block btn-lang" id="langDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <img *ngIf="SelectedLang" class="img-flag" src="../../assets/images/flag/{{SelectedLang?.Value}}.png" /> {{SelectedLang?.Key}}
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="langDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 34px, 0px);">
+                                <ng-container *ngFor="let item of LanguageList">
+                                    <a class="dropdown-item" [class.active]="SelectedLang?.Value == item.Value" (click)="ChangeLang(item)">
+                                        <img src="../../assets/images/flag/{{item.Value}}.png" />
+                                        {{item.Key| translate:service.CL}}
+                                    </a>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mt-5">
+                        <button [disabled]="isLoading" class="btn btn-block btn-warning btn-lg font-weight-medium" type="submit">
+                            <i *ngIf="isLoading" class="fa fa-circle-notch fa-spin"></i>
+                            {{'btnLogin'| translate:service.CL}}
+                        </button>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a class="auth-link text-white cursor" (click)="CheckLogin('forgotpwd')">{{'lblForgotPassword'| translate:service.CL}}</a>
+                    </div>
+                </form>
+                <form *ngIf="IsForgotPwdForm" class="pt-3" [formGroup]="ForgotPwdForm" (ngSubmit)="ForgotPwdForm.valid && ForgotPassword()" #f="ngForm" novalidate>
+                    <p>
+                        {{'lblForgotPasswordInfo'| translate:service.CL}}
+                    </p>
+                    <div class="form-group" [ngClass]="{ 'has-error-login': f.submitted && !ForgotPwdForm.controls.username.valid }">
+                        <input type="text" autofocus class="form-control" placeholder="UserName" formControlName="username">
+                        <i class="fa fa-user"></i>
+                    </div>
+                    <div class="mt-5">
+                        <button [disabled]="isLoading" class="btn btn-block btn-warning btn-lg font-weight-medium" type="submit">
+                            <i *ngIf="isLoading" class="fa fa-circle-notch fa-spin"></i>
+                            {{'lblSendMail'| translate:service.CL}}
+                        </button>
+                    </div>
+                    <div class="mt-3 text-center">
+                        <a class="auth-link text-white cursor" (click)="CheckLogin('login')"> {{'lblAlreadyAccount'| translate:service.CL}}</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+

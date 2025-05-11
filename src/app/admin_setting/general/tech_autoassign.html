@@ -1,0 +1,67 @@
+﻿
+<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">{{'lblAgentAutoAssign'| translate:service.CL}}</div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/admin">{{'lblAdminSetting'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <span>{{'lblAgentAutoAssign'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="TechAutoAssignForm" (ngSubmit)="TechAutoAssignForm.valid && Save()" #f="ngForm" novalidate>
+                            <div class="card-title">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                            </div>
+                            <div class="modal-body1">
+                                <div class="form-box row">
+                                    <div class="col-12 col-sm-12 col-md-6">
+                                        <div class="col-12 col-sm-12 col-md-12 form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input id="frmIs_Enable" type="checkbox" formControlName="Is_Enable" class="custom-control-input">
+                                                <label class="custom-control-label" for="frmIs_Enable">{{'lblIs_Enable'| translate:service.CL}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 form-group">
+                                            <div class="custom-control custom-radio">
+                                                <input id="frm_loadbalance" type="radio" value="load_balance" formControlName="AutoAssign_Type" class="custom-control-input">
+                                                <label class="custom-control-label" for="frm_loadbalance">{{'lblLoadBalance'| translate:service.CL}}</label>
+                                            </div>
+                                            <div class="custom-control custom-radio">
+                                                <input id="frm_roundrobin" type="radio" value="round_robin" formControlName="AutoAssign_Type" class="custom-control-input">
+                                                <label class="custom-control-label" for="frm_roundrobin">{{'lblRoundRobin'| translate:service.CL}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="table-header">
+                                            <button class="btn btn-sm btn-primary" type="button" (click)="OpenUserList();">{{'btnAddAgentsToExclude'| translate:service.CL}}</button>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped">
+                                                <thead><tr><th>{{'lblName'| translate:service.CL}}</th><th width="1%"></th></tr></thead>
+                                                <tbody>
+                                                    <tr *ngFor="let user of lstUsers">
+                                                        <td>{{user.DisplayName + ' (' + user.Email + ')' }}</td>
+                                                        <td class="small-btn"><button class="btn btn-xs btn-danger" type="button" title="Remove" (click)="Remove(user);">Remove</button></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<user-technician (onSave)="UserSelectDone($event)" #UserSelect></user-technician>

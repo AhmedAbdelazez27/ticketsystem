@@ -1,0 +1,17 @@
+﻿
+<footer class="footer" *ngIf="service?.Account?.UserID > 0">
+    <div class="container-fluid clearfix">
+        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">
+            {{'lblCopyright1'| translate:service.CL}} <a href="/" class="m-link" target="_blank">{{'lblCopyright2'| translate:service.CL}} </a> {{'lblCopyright3'| translate:service.CL}}
+        </span>
+        <span *ngIf="service?.Account?.Is_Agent_Original && service?.Account?.Is_Client" class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">
+            <i class="fa fa-arrow-right mr-1"></i>
+            <a *ngIf="!service?.Account?.Is_Show_ClientPortal_Link" (click)="Go_To_Portal()" class="m-link cursor">
+                {{'lblGoToAgentPortal'| translate:service.CL}}
+            </a>
+            <a *ngIf="service?.Account?.Is_Show_ClientPortal_Link" (click)="Go_To_Portal()" class="m-link cursor">
+                {{'lblGoToClientPortal'| translate:service.CL}}
+            </a>
+        </span>
+    </div>
+</footer>

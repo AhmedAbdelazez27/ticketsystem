@@ -1,0 +1,260 @@
+﻿<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12">
+            <a class="link">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i><span>
+                {{'lblDashboard'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row db-summary">
+            <div class="col-12 col-md-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        {{'lblTicketSummary'| translate:service.CL}}
+                    </div>
+                    <div class="row card-body">
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('all')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblAllTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-teal mb-0">
+                                                    {{model?.AllTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-teal" [style.width.%]="model?.AllTickets_percent">
+                                            {{model?.AllTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('open')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblOpenTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-primary mb-0">
+                                                    {{model?.OpenTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-primary"
+                                            [style.width.%]="model?.OpenTickets_percent">{{model?.OpenTickets_percent}}%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('closed')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblClosedTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-danger mb-0">
+                                                    {{model?.ClosedTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-danger"
+                                            [style.width.%]="model?.ClosedTickets_percent">
+                                            {{model?.ClosedTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('pending')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblPendingTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-orange mb-0">
+                                                    {{model?.PendingTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-orange"
+                                            [style.width.%]="model?.PendingTickets_percent">
+                                            {{model?.PendingTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('unassign')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblUnAssignedTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-warning mb-0">
+                                                    {{model?.UnAssignedTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-warning"
+                                            [style.width.%]="model?.UnAssignedTickets_percent">
+                                            {{model?.UnAssignedTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('overdue')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblOverdueTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-pink mb-0">
+                                                    {{model?.OverdueTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-pink"
+                                            [style.width.%]="model?.OverdueTickets_percent">
+                                            {{model?.OverdueTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('duetoday')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblDueTodayTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-pink mb-0">
+                                                    {{model?.DueTodayTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-pink"
+                                            [style.width.%]="model?.DueTodayTickets_percent">
+                                            {{model?.DueTodayTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6 col-sm-6 grid-margin-sm stretch-card">
+                            <div class="card card-statistics">
+                                <div class="card-body cursor bg-main-body border" (click)="GoToTickets('assignme')">
+                                    <div class="clearfix head-name">
+                                        <div class="float-left">
+                                            {{'lblAssignedToMeTickets'| translate:service.CL}}
+                                        </div>
+                                        <div class="float-right">
+                                            <div class="fluid-container">
+                                                <h3 class="card-title font-weight-bold text-right text-info mb-0">
+                                                    {{model?.AssignedToMeTickets}}</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-info"
+                                            [style.width.%]="model?.AssignedToMeTickets_percent">
+                                            {{model?.AssignedToMeTickets_percent}}%</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div *ngIf="isLoading" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        {{'lblOverview'| translate:service.CL}}
+                    </div>
+                    <div class="card-body">
+                        <div class="overflow_chart" *ngIf="model?.AllTickets > 0">
+                            <!-- <canvas baseChart #OverviewChart="base-chart" height="310"
+                                    [datasets]="OverviewChartData"
+                                    [labels]="OverviewChartLabels"
+                                    [options]="OverviewChartOptions"
+                                    [chartType]="'doughnut'"
+                                    [colors]="chart_colors"></canvas> -->
+
+                            <canvas baseChart #OverviewChart="base-chart" height="310" [datasets]="OverviewChartData"
+                                [labels]="OverviewChartLabels" [options]="OverviewChartOptions"></canvas>
+                        </div>
+                        <div class="nodata" *ngIf="!isLoading && model?.AllTickets == 0">
+                            <span>{{'lblNoData'| translate:service.CL}}</span>
+                        </div>
+                        <div *ngIf="isLoading_chart" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-41">
+            <div class="col-lg-6 grid-margin">
+                <div class="card full-height" *ngIf="AnnouncementList?.length > 0">
+                    <div class="card-title">
+                        {{'lblAnnouncement'| translate:service.CL}}
+                    </div>
+                    <div class="card-body min-height">
+                        <div *ngFor="let item of AnnouncementList"
+                            class="row ticket-card cursor mb-3 pb-2 border-bottom" (click)="Announcement.open(item)">
+                            <div class="ticket-details d-flex col-12 col-md-7">
+                                <i *ngIf="!item.Is_Client_Visible" title="private Announcement"
+                                    class="fa fa-lock mr-2 mt-1 font-19"></i>
+                                <i *ngIf="item.Is_Client_Visible" title="Public Announcement"
+                                    class="fa fa-globe mr-2 mt-1 font-19"></i>
+                                <a class="m-link font-weight-bold mb-0">{{item.Subject}}</a>
+                            </div>
+                            <div class="col-12 col-md-5 text-muted text-right">
+                                <p class="Last-responded mb-0 font-12">
+                                    {{item.StartDate | date : 'dd MMM yyyy'}} - {{item.EndDate | date : 'dd MMM yyyy'}}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div *ngIf="isLoading_announcement" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<announcement-view #Announcement></announcement-view>

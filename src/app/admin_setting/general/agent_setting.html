@@ -1,0 +1,128 @@
+﻿
+<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">{{'lblAgentSetting'| translate:service.CL}}</div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/admin">{{'lblAdminSetting'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <span>{{'lblAgentSetting'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="AgentSettingForm" (ngSubmit)="AgentSettingForm.valid && SaveAgentSetting()" #f="ngForm" novalidate>
+                            <div class="card-title">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                            </div>
+                            <div class="modal-body1">
+                                <div class="form-box row">
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Profile_Visible" type="checkbox" formControlName="Is_Profile_Visible" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Profile_Visible">{{'lblIsProfileVisible'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_CommonSetting_Visible" type="checkbox" formControlName="Is_CommonSetting_Visible" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_CommonSetting_Visible">{{'lblIsAdminSettingVisible'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <!--<div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Help_Visible" type="checkbox" formControlName="Is_Help_Visible" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Help_Visible">{{'lblIsHelpSectionVisible'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Solution_Visible" type="checkbox" formControlName="Is_Solution_Visible" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Solution_Visible">{{'lblIsSolutionVisible'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_ColumnChooser_Visible" type="checkbox" formControlName="Is_ColumnChooser_Visible" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_ColumnChooser_Visible">{{'lblIsColumnChooserVisible'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Print" type="checkbox" formControlName="Is_Print" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Print">{{'lblEnablePrintFunction'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Export" type="checkbox" formControlName="Is_Export" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Export">{{'lblEnableExportFunction'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Ticket_Search" type="checkbox" formControlName="Is_Ticket_Search" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Ticket_Search">{{'lblEnableCommonSearchInTicket'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Solution_Search" type="checkbox" formControlName="Is_Solution_Search" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Solution_Search">{{'lblEnableCommonSearchInSolution'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Column_Filter_Ticket" type="checkbox" formControlName="Is_Column_Filter_Ticket" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Column_Filter_Ticket">{{'lblEnableColumnFilterInTicket'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Column_Filter_Solution" type="checkbox" formControlName="Is_Column_Filter_Solution" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Column_Filter_Solution">{{'lblEnableColumnFilterInSolution'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Clone_Ticket" type="checkbox" formControlName="Is_Clone_Ticket" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Clone_Ticket">{{'lblEnableCloneTicket'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Clone_Solution" type="checkbox" formControlName="Is_Clone_Solution" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Clone_Solution">{{'lblEnableCloneSolution'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <label>{{'lblPageSize'| translate:service.CL}}</label>
+                                        <select formControlName="PageSize" class="form-control col-md-2">
+                                            <option value="10">10</option>
+                                            <option value="20">20</option>
+                                            <option value="30">30</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer form-btn mt-4 pb-0 prl-0">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,280 @@
+﻿<div #condition id="condition" class="filter_list" [style.left.px]="[left]" [style.top.px]="[top]"
+    [class.hide]="!isShowfiltermenu">
+    <ul id="string" class="filter_list_ul">
+        <li class="hide"><input type="text" [(ngModel)]="ColumnIndex" /></li>
+        <li value="" class="selected1" (click)="FilterConditionClick($event,'')">{{'lblNoFilter'| translate:service.CL}}
+        </li>
+        <li value="equal" [class.hide]="isDate" (click)="FilterConditionClick($event,'equal')">{{'lblIs'|
+            translate:service.CL}}</li>
+        <li value="notequal" [class.hide]="isDate" (click)="FilterConditionClick($event,'notequal')">{{'lblIsNot'|
+            translate:service.CL}}</li>
+        <li value="contain" [class.hide]="!isString" (click)="FilterConditionClick($event,'contain')">{{'lblContain'|
+            translate:service.CL}}</li>
+        <li value="doesnotcontain" [class.hide]="!isString" (click)="FilterConditionClick($event,'doesnotcontain')">
+            {{'lblNotContain'| translate:service.CL}}</li>
+        <li value="startwith" [class.hide]="!isString" (click)="FilterConditionClick($event,'startwith')">
+            {{'lblStartsWith'| translate:service.CL}}</li>
+        <li value="endwith" [class.hide]="!isString" (click)="FilterConditionClick($event,'endwith')">{{'lblEndsWith'|
+            translate:service.CL}}</li>
+        <li value="after" [class.hide]="!isDate" (click)="FilterConditionClick($event,'after')">{{'lblAfter'|
+            translate:service.CL}}</li>
+        <li value="before" [class.hide]="!isDate" (click)="FilterConditionClick($event,'before')">{{'lblBefore'|
+            translate:service.CL}}</li>
+        <li value="greaterthan" [class.hide]="!isNumber" (click)="FilterConditionClick($event,'greaterthan')">
+            {{'lblGreaterThan'| translate:service.CL}}</li>
+        <li value="lessthan" [class.hide]="!isNumber" (click)="FilterConditionClick($event,'lessthan')">{{'lblLessThan'|
+            translate:service.CL}}</li>
+        <li value="greaterthanequal" [class.hide]="!isNumber" (click)="FilterConditionClick($event,'greaterthanequal')">
+            {{'lblGreaterThanAndEqual'| translate:service.CL}}</li>
+        <li value="lessthanequal" [class.hide]="!isNumber" (click)="FilterConditionClick($event,'lessthanequal')">
+            {{'lblLessThanAndEqual'| translate:service.CL}}</li>
+
+        <li value="isnull" (click)="FilterConditionClick($event,'isnull')">{{'lblIsNull'| translate:service.CL}}</li>
+        <li value="isnotnull" (click)="FilterConditionClick($event,'isnotnull')">{{'lblNotNull'| translate:service.CL}}
+        </li>
+    </ul>
+</div>
+<div class="table-responsive" #container style="position:relative;">
+    <table class="table table-bordered table-striped table-hover" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th *ngIf="ShowCheckbox" class="text-center" width="4%">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="chkAll" [(ngModel)]="selectedAll"
+                            (change)="selectAll();">
+                        <label class="custom-control-label" for="chkAll"></label>
+                    </div>
+                </th>
+                <ng-container *ngFor="let filter of gridfilter;let i = index">
+                    <th [hidden]="!filter.Is_Visible"
+                        *ngIf="filter.ColumnName !== 'HasAttachment' && filter.ColumnName !== 'Action' "
+                        [style.width.%]="filter.Width?filter.Width:null" class="min-120" [ngClass]="filter.TextAlign">
+                        <a *ngIf="ShowSorting && filter['Is_Sort'] != false && totalitems > 0; else elseBlock"
+                            (click)="changeSorting(filter.SortColumnName ? filter.SortColumnName : filter.ColumnName, filter.Type)"
+                            class="{{ShowSorting && filter['Is_Sort'] != false && totalitems > 0 ? 'sort' : ''}}">
+                            {{filter.DisplayText | translate:service.CL}}
+                            <span
+                                ngClass="{{SortDirection?.toLowerCase() == 'asc' ? (filter.ColumnName == SortField || filter.SortColumnName == SortField ? 'asc' : '' ) : (SortDirection?.toLowerCase() == 'desc' ? (filter.ColumnName == SortField || filter.SortColumnName == SortField ? 'desc' : '' ) : '') }}"></span>
+                        </a>
+                        <ng-template #elseBlock>
+                            {{filter.DisplayText | translate:service.CL}}
+                        </ng-template>
+                        <div class="input-group hidden-phone"
+                            *ngIf="ShowFilter && (filter.Type == 'string' || filter.Type == 'number' )">
+                            <input type="text" class="form-control filter-textbox" [(ngModel)]="filter.Value"
+                                (keyup.enter)="FilterOnTextboxEnter(filter.Type,filter.Value,i,$event)" />
+                            <div class="input-append txt-filter">
+                                <button type="button" #currentTarget class="btn btn-secondary"
+                                    (click)="ColumnFilter(filter.Type,filter.Value,i,$event)" [id]="'filter'+i">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="input-group hidden-phone"
+                            *ngIf="ShowFilter && (filter.Type == 'date' || filter.Type == 'datetime')">
+                            <!-- <ng2-flatpickr [config]="dtConfig" altInputClass="form-control filter-textbox" [(ngModel)]="filter.Value" (change)="DateChange($event,filter);"></ng2-flatpickr> -->
+
+                            <mat-form-field appearance="fill">
+                                <mat-label>Start Date</mat-label>
+                                <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                                    [(ngModel)]="filter.Value">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                            <span class="input-append txt-filter">
+                                <button type="button" #currentTarget class="btn btn-secondary"
+                                    (click)="ColumnFilter(filter.Type,filter.Value,i,$event)" [id]="'filter'+i">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                            </span>
+
+                        </div>
+                        <div class="input-group hidden-phone bool" *ngIf="ShowFilter && filter.Type == 'bool'">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="{{filter.ColumnName}}"
+                                    [(ngModel)]="filter.Value"
+                                    (onchange)="ColumnFilter(filter.Type,filter.Value,i,$event)" />
+                                <label class="custom-control-label" for="{{filter.ColumnName}}"></label>
+                            </div>
+                            <div class="input-append txt-filter">
+                                <button type="button" #currentTarget class="btn btn-secondary"
+                                    (click)="ColumnFilter(filter.Type,filter.Value,i,$event)" [id]="'filter'+i">
+                                    <i class="fa fa-filter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </th>
+                    <th *ngIf="filter.ColumnName == 'HasAttachment' || filter.ColumnName === 'Action'"
+                        [style.width.%]="filter.Width?filter.Width:null"></th>
+                </ng-container>
+
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container>
+                <tr *ngFor="let item of pagedItems;let i = index" [class.active]="item.selectedRow"
+                    (click)="RowClick(item, $event,i)" (dblclick)="RowDbClick(item)"
+                    [class.font-weight-bold]="ModuleType == 'ticket' && !item.AssignedName && item.StatusType != 'Closed'">
+                    <td *ngIf="ShowCheckbox" class="text-center">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="{{item.Id}}" value="{{item.Id}}"
+                                [(ngModel)]="item.selectedRow" (change)="checkIfAllSelected($event,i);">
+                            <label class="custom-control-label" for="{{item.Id}}"></label>
+                        </div>
+                    </td>
+                    <td *ngFor="let filter of gridfilter" [hidden]="!filter.Is_Visible"
+                        [class.subtooltip]="filter.ColumnName == 'Subject'"
+                        [attr.ID]="filter.ColumnName == 'Subject' ? item.DisplayTicketID : ''"
+                        [ngClass]="(filter.TextAlign ? filter.TextAlign : '' ) + ' ' + (filter.Is_TDClass && item.TDClass ? item.TDClass : '')">
+                        <input type="hidden" *ngIf="ModuleType == 'ticket' && filter.ColumnName == 'Subject'" id="ID"
+                            [value]="item.DisplayTicketID +'|'+item.Subject +'|'+ (item.CategoryName ? item.CategoryName : '' )+'|'+ item.StatusName " />
+                        <input type="hidden" *ngIf="ModuleType == 'solution' && filter.ColumnName == 'Subject'" id="ID"
+                            [value]="item.DisplaySolutionID +'|'+item.Subject +'|'+(item.CategoryName ? item.CategoryName : '' )" />
+
+                        <ng-container *ngIf="ModuleType == 'ticket' && filter.ColumnName == 'DisplayTicketID'">
+                            <i *ngIf="item['Is_FCR']" class="fa fa-bookmark text-primary float-right mr-1"
+                                title="{{'lblFCRMarked'| translate:service.CL}}"></i>{{item[filter.ColumnName]}}
+                        </ng-container>
+                        <ng-container
+                            *ngIf="(ModuleType == 'ticket' || ModuleType == 'solution') && filter.ColumnName == 'Subject'">
+                            <a (click)="$event.preventDefault();ViewRow(item);">{{item[filter.ColumnName]}}</a>
+                        </ng-container>
+                        <ng-container
+                            *ngIf="filter.ColumnName !== 'HasAttachment' && filter.ColumnName !== 'Action' && filter.ColumnName !== 'Subject' && filter.ColumnName != 'DisplayTicketID'">
+                            <ng-container *ngIf="!filter.Is_EditLink">
+                                <button type="button"
+                                    *ngIf="filter.ColumnName == 'PriorityName' && item[filter.ColumnName]"
+                                    class="btn pd-7 mr-1" [style.background]="item['ColorName']"></button>
+
+                                <span
+                                    *ngIf="filter.Type == 'string' || (filter.Type == 'number' && !filter.Is_Price)">{{item[filter.ColumnName]}}</span>
+                                <span *ngIf="filter.Type == 'number' && filter.Is_Price">{{item[filter.ColumnName] |
+                                    number:'1.2-2'}}</span>
+                                <span *ngIf="filter.Type == 'date'">{{item[filter.ColumnName] | date:'dd MMM yyyy'
+                                    }}</span>
+                                <span *ngIf="filter.Type == 'datetime'">{{item[filter.ColumnName] | date:'dd MMM yyyy
+                                    hh:mm a' }}</span>
+                                <span *ngIf="filter.Type == 'bool'">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" [disabled]="true" [checked]="item[filter.ColumnName]"
+                                            class="custom-control-input">
+                                        <label class="custom-control-label"></label>
+                                    </div>
+                                </span>
+                            </ng-container>
+                            <ng-container *ngIf="filter.Is_EditLink">
+                                <span
+                                    (click)="$event.preventDefault();ActionClick(item, filter.EditType ? filter.EditType : 'view')"
+                                    class="link">{{item[filter.ColumnName]}}</span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-container *ngIf="filter.ColumnName == 'HasAttachment' || filter.ColumnName == 'Action'">
+                            <i *ngIf="filter.ColumnName == 'HasAttachment' && item['HasAttachment']"
+                                class="fa fa-paperclip font-22"></i>
+                        </ng-container>
+                        <ng-container *ngIf="filter.ColumnName == 'Action' && filter.Actions">
+                            <ng-container *ngFor="let action of filter.Actions">
+                                <button type="button"
+                                    class="btn btn-sm {{action.class ? action.class : 'btn-secondary' }} waves-effect action"
+                                    title="{{action.text}}" (click)="ActionClick(item,action.type);">
+                                    <i *ngIf="action.font" [class]="action.font"></i> {{action.text}}
+                                </button>
+                            </ng-container>
+                        </ng-container>
+                    </td>
+                </tr>
+                <tr *ngIf="pagedItems?.length == 0">
+                    <td [attr.colspan]="gridfilter.length + 1" class="text-center"
+                        style="font-weight:bold;line-height:100px;">No Data</td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="table-footer" *ngIf="pagedItems?.length > 0">
+    <span class="">
+        <span *ngIf="PagingType !== 'nextprevnumber'">
+            {{'lblShowing'| translate:service.CL}} {{pager.startIndex+1}} {{'lblTo'| translate:service.CL}}
+            {{pager.endIndex+1}} {{'lblOf'| translate:service.CL}} {{pager.totalItems}} {{'lblentries'|
+            translate:service.CL}}
+        </span>
+        <span *ngIf="PagingType == 'nextprevnumber'">
+            {{'lblPage'| translate:service.CL}} {{pager.currentPage}} {{'lblOf'| translate:service.CL}}
+            {{pager.totalPages}} / {{pager.totalItems}} {{'lblIn'| translate:service.CL}} {{pager.totalPages}}
+            {{'lblentries'| translate:service.CL}}
+        </span>
+        <select *ngIf="ShowPagesize" [(ngModel)]="pagesize" (change)="PageSizeChange($event.target.value)"
+            class="form-control form-control-sm">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+        </select>
+    </span>
+    <nav aria-label="Page navigation">
+        <ul *ngIf="pager.pages && pager.pages.length" class="pagination pagination-sm">
+            <!--next previous with number paging-->
+            <ng-template [ngIf]="PagingType == 'nextprevnumber'">
+                <li class="page-item previous" [ngClass]="{'disabled':noPrevious()}">
+                    <a class="page-link" (click)="setPage(pager.currentPage - 1)">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+
+                <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a class="page-link" (click)="setPage(page)">{{page}}</a>
+                </li>
+
+                <li class="page-item next" [ngClass]="{'disabled':noNext()}">
+                    <a class="page-link" (click)="setPage(pager.currentPage + 1)">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+            </ng-template>
+            <!--next previous number with advanced paging-->
+            <ng-template [ngIf]="PagingType == 'nextprevnumberadvanced'">
+                <li class="page-item first" [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a class="page-link" (click)="!(pager.currentPage === 1) && setPage(1)">
+                        <i class="fa fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <li class="page-item previous" [ngClass]="{disabled:pager.currentPage === 1}">
+                    <a class="page-link" (click)="!(pager.currentPage === 1) && setPage(pager.currentPage - 1)">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                </li>
+
+                <li class="page-item" *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+                    <a class="page-link" (click)="!(pager.currentPage === page) && setPage(page)">{{page}}</a>
+                </li>
+
+                <li class="page-item next" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a class="page-link"
+                        (click)="!(pager.currentPage === pager.totalPages) && setPage(pager.currentPage + 1)">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                </li>
+                <li class="page-item last" [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+                    <a class="page-link"
+                        (click)="!(pager.currentPage === pager.totalPages) && setPage(pager.totalPages)">
+                        <i class="fa fa-angle-double-right"></i>
+                    </a>
+                </li>
+            </ng-template>
+            <!--next previous paging-->
+            <ng-template [ngIf]="PagingType == 'nextprev'">
+                <li class="page-item previous" [ngClass]="{'disabled':noPrevious()}">
+                    <a class="page-link" (click)="setPage(pager.currentPage - 1)">{{'lblPrevious'|
+                        translate:service.CL}}</a>
+                </li>
+                <li class="page-item next" [ngClass]="{'disabled':noNext()}">
+                    <a class="page-link" (click)="setPage(pager.currentPage + 1)">{{'lblNext'|
+                        translate:service.CL}}</a>
+                </li>
+            </ng-template>
+
+        </ul>
+    </nav>
+</div>

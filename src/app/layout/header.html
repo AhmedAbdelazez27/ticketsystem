@@ -1,0 +1,129 @@
+﻿
+<nav *ngIf="service?.Account?.UserID > 0" class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+        <a class="navbar-brand brand-logo" routerLink="/">            
+            <img *ngIf="logoUrl" alt="logo" [src]="logoUrl" style="width:200px;height:24px;" />
+            <span *ngIf="service?.Account?.CompanyTitle" class="company-title">{{service?.Account?.CompanyTitle }}</span>
+        </a>
+        <a class="navbar-brand brand-logo-mini" routerLink="/">            
+            <img *ngIf="logoUrl" alt="logo" [src]="logoUrl" style="width:200px;height:24px;" />
+            <span *ngIf="service?.Account?.CompanyTitle" class="company-title">{{service?.Account?.CompanyTitle }}</span>
+        </a>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-center p-0">       
+        <!-- For Agent Menus -->
+        <ul *ngIf="service?.Account?.Is_Agent" class="navbar-nav navbar-nav-left header-links d-none d-lg-flex">
+            <li class="nav-item">
+                <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link"><i class="fa fa-home"></i>{{'lblHome'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Summary_Menu" routerLink="/summary" routerLinkActive="active" class="nav-link"><i class="fa fa-chart-bar"></i>{{'lblSummary'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Ticket_Menu" routerLink="/ticket" routerLinkActive="active" class="nav-link"><i class="fa fa-ticket-alt"></i>{{'lblTicket'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Solution_Menu" routerLink="/solution" routerLinkActive="active" class="nav-link"><i class="fa fa-check"></i>{{'lblSolution'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Admin_Menu" routerLink="/admin" routerLinkActive="active" class="nav-link"><i class="fa fa-cog"></i>{{'lblAdminSetting'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Report_Menu" routerLink="/" routerLinkActive="active" class="nav-link"><i class="fa fa-chart-bar"></i>{{'lblReports'| translate:service.CL}}</a>
+            </li>
+        </ul>
+        <!-- For Client Menus -->
+        <ul *ngIf="!service?.Account?.Is_Agent" class="navbar-nav navbar-nav-left header-links d-none d-lg-flex">
+            <li class="nav-item">
+                <a routerLink="/requester" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="nav-link"><i class="fa fa-home"></i>{{'lblHome'| translate:service.CL}}</a>
+            </li>            
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Ticket_Menu_Client" routerLink="/requester/ticket" routerLinkActive="active" class="nav-link"><i class="fa fa-ticket-alt"></i>{{'lblTicket'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Show_Solution_Menu_Client" routerLink="/requester/solution" routerLinkActive="active" class="nav-link"><i class="fa fa-check"></i>{{'lblSolution'| translate:service.CL}}</a>
+            </li>
+            <li class="nav-item">
+                <a *ngIf="service?.Account?.Is_Profile_Visible_Client" routerLink="/requester/profile" routerLinkActive="active" class="nav-link"><i class="fa fa-user"></i>{{'lblMyProfile'| translate:service.CL}}</a>
+            </li>          
+        </ul>
+
+
+
+        <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item dropdown">
+                <a class="nav-link count-indicator dropdown-toggle m-0" id="notificationDropdown" href="#" data-toggle="dropdown">
+                    <i class="fa fa-bullhorn"></i>
+                    <span class="count">{{AnnouncementList?.length}}</span>
+                </a>
+                <div *ngIf="AnnouncementList" class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list ddl-announcment" aria-labelledby="notificationDropdown">
+                    <ng-container *ngFor="let item of AnnouncementList">
+                        <a class="dropdown-item preview-item cursor" (click)="Announcement.open(item)">
+                            <div class="preview-thumbnail text-dark">
+                                <i *ngIf="!item.Is_Client_Visible" title="public Announcement" class="fa fa-lock"></i>
+                                <i *ngIf="item.Is_Client_Visible" title="Public Announcement" class="fa fa-globe"></i>
+                            </div>
+                            <div class="preview-item-content flex-grow">
+                                <h6 class="preview-subject ellipsis font-weight-medium">
+                                    {{item.Subject}}
+                                </h6>
+                                <p class="float-right font-weight-light small-text text-muted">
+                                    {{item.StartDate | date : 'dd MMM yyyy'}} - {{item.EndDate | date : 'dd MMM yyyy'}}
+                                </p>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                    </ng-container>
+
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle m-0" id="langDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                    <img src="../../assets/images/flag/{{selectedLang ? selectedLang : 'EN'}}.png" class="mr-1"/>
+                    <span class="font-13">{{selectedLang_Key}}</span>
+                </a>
+                <div *ngIf="LanguageList.length > 0" class="dropdown-menu dropdown-menu-right navbar-dropdown user-dropdown" aria-labelledby="langDropdown"
+                     style="max-height:255px;overflow:auto;">
+                    <ng-container *ngFor="let item of LanguageList">
+                        <div class="dropdown-item cursor" [class.active]="item.Value == selectedLang" (click)="changeLanguage(item)">
+                            <a>
+                                <img src="../../assets/images/flag/{{item.Value}}.png" />
+                                {{item.Key}}
+                            </a>
+                        </div>
+                    </ng-container>
+                </div>
+            </li>            
+
+            <li class="nav-item dropdown d-none1 d-lg-block">
+                <a id="profileDropdown" class="nav-link dropdown-toggle m-0" href="#" data-toggle="dropdown" aria-expanded="false">
+                    <img class="img-xs rounded-circle mr-1" [src]="ProfilePicture" alt="">
+                    <span class="font-13">{{service?.Account?.DisplayName}}</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown user-dropdown" aria-labelledby="profileDropdown">
+                    <a *ngIf="service?.Account?.Is_Agent && service?.Account?.Is_Profile_Visible" class="dropdown-item" routerLink="/admin/user_agent" [queryParams]="{id: service?.Account?.UserID}">
+                        <i class="fa fa-user"></i> {{'lblProfile'| translate:service.CL}}
+                    </a>
+                    <a *ngIf="!service?.Account?.Is_Agent && service?.Account?.Is_Profile_Visible_Client" class="dropdown-item" routerLink="/requester/profile">
+                        <i class="fa fa-user"></i> {{'lblProfile'| translate:service.CL}}
+                    </a>
+
+                    <a class="dropdown-item cursor" (click)="changePassword.open();"><i class="fa fa-eye-slash"></i> {{'lblChangePassword'| translate:service.CL}}</a>
+                    <a class="dropdown-item" routerLink="/"><i class="fa fa-comments"></i> {{'lblHelp'| translate:service.CL}}</a>
+                    <a class="dropdown-divider"></a>
+                    <a class="dropdown-item cursor" (click)="service?.logOut();"><i class="fa fa-sign-out-alt"></i> {{'lblLogout'| translate:service.CL}}</a>
+                </div>
+            </li>
+        </ul>
+        <button type="button" class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" style="position:fixed;right:0;" data-toggle="offcanvas" (click)="service?.ShowHide_LeftMenu();">
+            <span class="fa fa-bars"></span>
+        </button>
+
+    </div>
+
+</nav>
+
+
+
+<change-password (onSave)="ChangePwdDone()" #changePassword></change-password>
+<announcement-view #Announcement></announcement-view>

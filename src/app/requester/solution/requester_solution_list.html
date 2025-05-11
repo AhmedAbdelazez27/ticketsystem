@@ -1,0 +1,131 @@
+﻿<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">
+            {{'lblSolutionList'| translate:service.CL}}
+        </div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/requester">{{'lblHome'| translate:service.CL}}</a> <i
+                class="fa fa-angle-double-right"></i>
+            <span>{{'lblSolution'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body min-height">
+                        <div class="table-header">
+                            <div>
+                                <!-- <button id="Tooltip-6" type="button" class="btn btn-sm btn-secondary mr-1 tlp"
+                                    
+                                    (click)="txtSearch='';refreshGrid(true);"><i class="fa fa-sync"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_View_Solution_Client"
+                                    (click)="ViewRow('')" class="btn btn-sm btn-primary tlp"
+                                    ><i class="fa fa-search"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Clone_Solution_Client"
+                                    (click)="CloneSolution()" class="btn btn-sm btn-info tlp"
+                                    ><i
+                                        class="fa fa-clone"></i></button>
+                                <a target="_blank" *ngIf="service?.Account?.Is_Print_Client" (click)="Print()"
+                                    class="btn btn-sm btn-info tlp"><i
+                                        class="fa fa-print"></i></a> -->
+
+                                <button id="Tooltip-6" type="button" class="btn btn-sm btn-secondary mr-1 tlp"
+                                    (click)="txtSearch='';refreshGrid(true);"><i class="fa fa-sync"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_View_Solution_Client"
+                                    (click)="ViewRow('')" class="btn btn-sm btn-primary tlp"><i
+                                        class="fa fa-search"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Clone_Solution_Client"
+                                    (click)="CloneSolution()" class="btn btn-sm btn-info tlp"><i
+                                        class="fa fa-clone"></i></button>
+                                <a target="_blank" *ngIf="service?.Account?.Is_Print_Client" (click)="Print()"
+                                    class="btn btn-sm btn-info tlp"><i class="fa fa-print"></i></a>
+                                <div class="dropdown d-inline" *ngIf="service?.Account?.Is_Export_Client">
+                                    <!-- <button type="button" class="btn btn-sm btn-info tlp"  id="export" data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-file-excel mr-1"></i> <i class="fa fa-angle-down ml-2"></i>
+                                    </button> -->
+                                    <button type="button" class="btn btn-sm btn-info tlp" id="export"
+                                        data-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa fa-file-excel mr-1"></i> <i class="fa fa-angle-down ml-2"></i>
+                                    </button>
+                                    <div class="dropdown-menu cursor" aria-labelledby="export">
+                                        <div class="dropdown-item" (click)="Export('excel')"><i
+                                                class="fa fa-file-excel"></i> {{'lblExportToExcel'|
+                                            translate:service.CL}}</div>
+                                        <div class="dropdown-item" (click)="Export('pdf')"><i
+                                                class="fa fa-file-pdf"></i> {{'lblExportToPDF'| translate:service.CL}}
+                                        </div>
+                                        <div class="dropdown-item" (click)="Export('csv')"><i
+                                                class="fa fa-file-alt"></i> {{'lblExportToCSV'| translate:service.CL}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-filter">
+                                <input type="text" *ngIf="service?.Account?.Is_Solution_Search_Client"
+                                    class="form-control form-control-sm" name="filter"
+                                    placeholder="{{'phSearch'| translate:service.CL}}" [(ngModel)]="txtSearch"
+                                    (keyup)="service.App.searchFilter.emit($event.target.value);">
+                                <!-- <button *ngIf="service?.Account?.Is_Column_Filter_Solution_Client"
+                                    class="btn btn-sm btn-secondary tlp"
+                                     type="button"
+                                    (click)="ShowHideColumnFilter()"><i class="fa fa-eye-slash"></i></button> -->
+
+                                <button *ngIf="service?.Account?.Is_Column_Filter_Solution_Client"
+                                    class="btn btn-sm btn-secondary tlp" type="button"
+                                    (click)="ShowHideColumnFilter()"><i class="fa fa-eye-slash"></i></button>
+                                <div class="dropdown dropleft"
+                                    *ngIf="service?.Account?.Is_ColumnChooser_Visible_Client">
+                                    <!-- <button class="btn btn-sm btn-secondary tlp" data-toggle="dropdown"
+                                         type="button">
+                                        <i class="fa fa-cog"></i>
+                                    </button> -->
+
+                                    <button class="btn btn-sm btn-secondary tlp" data-toggle="dropdown" type="button">
+                                        <i class="fa fa-cog"></i>
+                                    </button>
+                                    <ul class="dropdown-menu max-dropdown-overflow" (click)="$event.stopPropagation()">
+                                        <ng-container *ngFor="let filter of gridFilter;let i = index;">
+                                            <li *ngIf="filter.ColumnName != 'HasAttachment'" class="dropdown-item">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input"
+                                                        id="chkfltr-{{i}}" [(ngModel)]="filter.Is_Visible"
+                                                        (change)="change_columnchooser(filter, $event.target.value, i)">
+                                                    <label class="custom-control-label" for="chkfltr-{{i}}">
+                                                        <span>{{filter.DisplayText | translate:service.CL}}</span>
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        </ng-container>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="position:relative;">
+                            <ticket-commongrid #commongrid [ModuleType]="'solution'" *ngIf="allItems.length > 0"
+                                [records]="allItems" [gridfilter]="gridFilter" [SearchText]="txtSearch" [pagesize]="10"
+                                (change)="pageChanged($event)" [ShowSorting]="true"
+                                [PagingType]="'nextprevnumberadvanced'" [ShowPagesize]="true" [ShowFilter]="true"
+                                [ShowCheckbox]="true"
+                                (ViewRow)="service?.Account?.Is_View_Solution_Client && ViewRow($event)">
+                            </ticket-commongrid>
+                            <div class="nodata" *ngIf="!isLoading && allItems.length == 0">
+                                <span>{{'lblNoData'| translate:service.CL}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<row-view #RowView></row-view>

@@ -1,0 +1,19 @@
+﻿
+<div [style.display]="visible?'block':'none'">
+    <div class="modal-backdrop fade show" (click)="closeByBackDrop()"></div>
+    <div class="modal" [class.show]="visible" [class.in]="!visibleOut" [class.out]="visibleOut" [style.display]="visible?'block':'none'" tabindex="-1" role="dialog" aria-labelledby="default-form" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered1" role="document" [ngClass]="modalClass">
+            <div class="modal-content animated" [class.slideInDown]="!visibleOut" [class.fadeOutUp]="visibleOut">
+                <div *ngIf="modalHeader" class="modal-header">
+                    <h5 class="modal-title">{{modalHeader}}</h5>
+                    <button type="button" class="close" (click)="close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!--<div class="modal-body">-->
+                <ng-content></ng-content>
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+</div>

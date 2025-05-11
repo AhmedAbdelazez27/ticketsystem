@@ -1,0 +1,33 @@
+﻿
+
+<div class="container-scroller">
+    <alert></alert>
+    <app-header *ngIf="service?.Account?.UserID > 0" style="height:58px;display:inherit;"></app-header>
+    <div class="container-fluid page-body-wrapper" [ngClass]="service?.Account?.UserID > 0 ? '' : 'full-page-wrapper'">
+        <app-sidenav *ngIf="service?.Account?.UserID > 0"></app-sidenav>
+        <router-outlet></router-outlet>
+    </div>
+    <app-footer *ngIf="service?.Account?.UserID > 0"></app-footer>
+</div>
+<div class="main_loader app_loader" *ngIf="service?.App?.AppLoader">
+    <div class="background">
+        <div class="wrapper">
+            <div class="ball-scale-multiple">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main_loader app_loader" *ngIf="service?.App?.ShowLoader">
+    <div class="background">
+        <div class="wrapper">
+            <div class="ball-scale-multiple">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>

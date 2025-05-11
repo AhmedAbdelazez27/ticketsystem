@@ -1,0 +1,59 @@
+﻿<nav class="sidebar sidebar-main sidebar-offcanvas" [ngClass]="service?.menu_Model?.Main_Menu_Class">
+    <ul class="nav" *ngIf="service?.Account?.Is_Agent">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-home"></i> {{'lblHome'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Summary_Menu" class="nav-link" routerLink="/summary" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-chart-bar"></i> {{'lblSummary'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Ticket_Menu" class="nav-link" routerLink="/ticket" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-ticket-alt"></i> {{'lblTicket'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Solution_Menu" class="nav-link" routerLink="/solution" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-check"></i> {{'lblSolution'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Admin_Menu" class="nav-link" routerLink="/admin" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-cog"></i> {{'lblAdminSetting'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Report_Menu" class="nav-link" routerLink="/" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-chart-bar"></i> {{'lblReports'| translate:service.CL}}</span>
+            </a>
+        </li>
+    </ul>
+
+<!-- For Client Menus -->
+    <ul class="nav" *ngIf="!service?.Account?.Is_Agent">
+        <li class="nav-item">
+            <a class="nav-link" routerLink="/requester" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-home"></i> {{'lblHome'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Ticket_Menu_Client" class="nav-link" routerLink="/requester/ticket" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-ticket-alt"></i> {{'lblTicket'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Show_Solution_Menu_Client" class="nav-link" routerLink="/requester/solution" routerLinkActive="active" (click)="service?.ShowHide_LeftMenu();">
+                <span class="menu-title"> <i class="fa fa-check"></i> {{'lblSolution'| translate:service.CL}}</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a *ngIf="service?.Account?.Is_Profile_Visible_Client" routerLink="/requester/profile" routerLinkActive="active" class="nav-link" (click)="service?.ShowHide_LeftMenu();">
+                <i class="fa fa-user"></i>{{'lblMyProfile'| translate:service.CL}}
+            </a>
+        </li>
+    </ul>
+
+</nav>

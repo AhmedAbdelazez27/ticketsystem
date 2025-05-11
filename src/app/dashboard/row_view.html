@@ -1,0 +1,262 @@
+﻿
+<modal-dialog #modalRow [backDrop]="false" modalClass="modal-lg" [modalHeader]="HeaderText| translate:service.CL">
+    <div *ngIf="ModuleType == 'ticket'" class="modal-body">
+        <div class="form-box row">
+            <div class="col-12 col-md-12">
+                <div class="form-group mb-2">
+                    <div class="card">
+                        <div class="card-body bg-main-body border p-3 font-20">
+                            <div class="font-18 mb-1">{{model?.DisplayTicketID}} - {{model?.Subject}} </div>
+                            <div class="font-13 mb-1">
+                                {{'lblBy'| translate:service.CL}} <a class="link cursor ml-1 mr-1" (click)="ViewUser(model?.CreatedUser)">{{model?.CreatedUserName}}</a>
+                                {{'lblCreatedOn'| translate:service.CL}} {{model?.CreatedDate | date : 'dd-MMM-yyyy HH:mm'}}
+                            </div>
+                            <button *ngIf="model?.Is_FCR == true" type="button" class="badge badge-primary float-right"><i class="fa fa-bookmark mr-1"></i> {{'lblFCRMarked'| translate:service.CL}}</button>
+                            <mark class="font-14">
+                                {{'lblStatus'| translate:service.CL}} : <span class="font-weight-bold">{{model?.StatusName}}</span>
+                            </mark>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblRequester'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.RequestedName}}</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblTechnician'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.AssignedName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblRequestType'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.RequestTypeName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblTicketMode'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.TicketModeName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblLevel'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.LevelName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblCategory'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.CategoryName}}</b>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblSubCategory'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.SubCategoryName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblItem'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.ItemName}}</b>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblImpact'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.ImpactName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblPriority'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.PriorityName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblUrgency'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.UrgencyName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblDepartment'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.DepartmentName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblLocation'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.LocationName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblDueDate'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.DueDate | date : 'dd-MMM-yyyy HH:mm'}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 mb-2">
+                <div class="form-group row mb-2">
+                    <label class="col-12 col-md-2 col-form-label">{{'lblDescription'| translate:service.CL}} </label>
+                    <div class="col-12 col-md-10 col-form-label overflow_chart" [innerHTML]="model?.Description | safeHtml">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12">
+                <div class="form-group row mb-2">
+                    <label class="col-12 col-md-2 col-form-label">{{'lblResolution'| translate:service.CL}} </label>
+                    <div class="col-12 col-md-10 col-form-label overflow_chart" [innerHTML]="model?.SolutionDescription | safeHtml">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-12">
+                <div class="form-group row mb-2">
+                    <label class="col-12 col-md-2 col-form-label">{{'lblAttachments'| translate:service.CL}} </label>
+                    <div class="col-12 col-md-10 col-form-label overflow_chart">
+                        <table class="table table-bordered table-striped small-btn table-attachment">
+                            <tr *ngFor="let item of AttachmentList">
+                                <td>
+                                    <i class="mr-2" [ngClass]="item.Extension | fileType"></i>                                    
+                                    <a target="_blank" href="{{service?.Settings?.Base_API_URL + '/Documents/Attachments/Ticket/' + item.FileName}}"> {{item.DisplayName}}</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div *ngIf="ModuleType == 'solution'" class="modal-body">
+        <div class="form-box row">
+            <div class="col-12 col-md-12">
+                <div class="form-group mb-2">
+                    <div class="card">
+                        <div class="card-body bg-main-body border p-3 font-20">
+                            <div class="font-18 mb-1">{{model?.DisplaySolutionID}} - {{model?.Subject}} </div>
+                            <div class="font-13">
+                                {{'lblBy'| translate:service.CL}} <a class="link cursor ml-1 mr-1" (click)="ViewUser(model?.CreatedUser)">{{model?.CreatedUserName}}</a>
+                                {{'lblCreatedOn'| translate:service.CL}} {{model?.CreatedDate | date : 'dd-MMM-yyyy HH:mm'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblCategory'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.CategoryName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblSubCategory'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.SubCategoryName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblItem'| translate:service.CL}} </label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.ItemName}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblKeywords'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.MetaKeywords}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6">
+                <div class="form-group row mb-2">
+                    <label class="col-5 col-md-4 col-form-label">{{'lblComments'| translate:service.CL}}</label>
+                    <div class="col-7 col-md-8 col-form-label">
+                        <b>{{model?.Comments}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 mb-2">
+                <div class="form-group row mb-2">
+                    <label class="col-12 col-md-2 col-form-label">{{'lblSolution'| translate:service.CL}} </label>
+                    <div class="col-12 col-md-10 col-form-label overflow_chart" [innerHTML]="model?.Description | safeHtml">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-12">
+                <div class="form-group row mb-2">
+                    <label class="col-12 col-md-2 col-form-label">{{'lblAttachments'| translate:service.CL}} </label>
+                    <div class="col-12 col-md-10 col-form-label overflow_chart">
+                        <table class="table table-bordered table-striped small-btn table-attachment">
+                            <tr *ngFor="let item of AttachmentList">
+                                <td>
+                                    <i class="mr-2" [ngClass]="item.Extension | fileType"></i>                                    
+                                    <a target="_blank" href="{{service?.Settings?.Base_API_URL + '/Documents/Attachments/Solution/' + item.FileName}}"> {{item.DisplayName}}</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="modal-footer form-btn">
+        <button type="button" class="btn btn-secondary" (click)="modalRow.close()">{{'btnClose'| translate:service.CL}}</button>
+    </div>
+</modal-dialog>
+
+
+<user-technician (onSave)="UserSelectDone($event)" #UserSelect></user-technician>

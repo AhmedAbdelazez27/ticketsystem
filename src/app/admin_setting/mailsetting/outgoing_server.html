@@ -1,0 +1,76 @@
+﻿
+<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">{{'lblOutgoingEmailServer'| translate:service.CL}}</div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/admin">{{'lblAdminSetting'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i>
+            <span>{{'lblOutgoingEmailServer'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="OutgoingEmail_ServerForm" (ngSubmit)="OutgoingEmail_ServerForm.valid && SaveOutgoing_Server()" #f="ngForm" novalidate>
+                            <div class="card-title">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                                <a class="btn btn-sm btn-info" (click)="TestOutgoing_Server();"><i class="fa fa-check mr-1"></i>{{'btnTestConnection'| translate:service.CL}}</a>
+                            </div>
+                            <div class="modal-body1">
+                                <div class="form-box row">
+                                    <div class="col-12 col-sm-12 col-md-6 form-group" [ngClass]="{ 'has-error': f.submitted && !OutgoingEmail_ServerForm.controls.host.valid }">
+                                        <label>{{'lblServerName'| translate:service.CL}}</label>
+                                        <input type="text" class="form-control col-md-10" formControlName="host" placeholder="Enter Server Name" />
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group" [ngClass]="{ 'has-error': f.submitted && !OutgoingEmail_ServerForm.controls.port.valid }">
+                                        <label>{{'lblPort'| translate:service.CL}}</label>
+                                        <input type="text" number-only class="form-control col-md-10" formControlName="port" placeholder="Enter Port" />
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group" [ngClass]="{ 'has-error': f.submitted && !OutgoingEmail_ServerForm.controls.userName.valid }">
+                                        <label>{{'lblUsername'| translate:service.CL}}</label>
+                                        <input type="text" class="form-control col-md-10" formControlName="userName" placeholder="Enter Username" />
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group" [ngClass]="{ 'has-error': f.submitted && !OutgoingEmail_ServerForm.controls.password.valid }">
+                                        <label>{{'lblPassword'| translate:service.CL}}</label>
+                                        <input type="password" class="form-control col-md-10" formControlName="password" placeholder="Enter Password" />
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmEnableSsl" type="checkbox" formControlName="enableSsl" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmEnableSsl">{{'lblEnableSsl'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmDefaultCredentials" type="checkbox" formControlName="defaultCredentials" class="custom-control-input">
+                                            <label class="custom-control-label" for="frmDefaultCredentials">{{'lblDefaultCredentials'| translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <label>{{'lblFromEmail'| translate:service.CL}}</label>
+                                        <input type="text" class="form-control col-md-10" formControlName="fromEmail" placeholder="Enter From Email" />
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <label>{{'lblFromEmailAlias'| translate:service.CL}}</label>
+                                        <input type="text" class="form-control col-md-10" formControlName="fromEmailAlias" placeholder="Enter From Email Alias" />
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="modal-footer form-btn mt-4 pb-0 prl-0">
+                                <button type="submit" class="btn btn-sm btn-teal"><i class="fa fa-save mr-1"></i>{{'btnSave'| translate:service.CL}}</button>
+                                <a class="btn btn-sm btn-secondary" routerLink="/admin"><i class="fa fa-times mr-1"></i>{{'btnCancel'| translate:service.CL}}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

@@ -1,0 +1,214 @@
+﻿<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12 col-md-6 title">
+            {{'lblEditSolution'| translate:service.CL}}
+        </div>
+        <div class="col-12 col-md-6">
+            <a class="link" routerLink="/">{{'lblHome'| translate:service.CL}}</a> <i
+                class="fa fa-angle-double-right"></i>
+            <a class="link" routerLink="/solution">{{'lblSolution'| translate:service.CL}}</a> <i
+                class="fa fa-angle-double-right"></i>
+            <span>{{'lblEditSolution'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-12 stretch-card">
+                <div class="card">
+                    <div class="card-body">
+                        <form [formGroup]="SolutionForm" (ngSubmit)="SolutionForm.valid && SaveSolution()" #f="ngForm"
+                            novalidate>
+                            <div class="card-title">
+                                <button type="submit" class="btn btn-sm btn-primary tlp"><i
+                                        class="fa fa-save"></i></button>
+                                <button type="submit" class="btn btn-sm btn-primary tlp"
+                                    (click)="Is_SaveAndclose = true;">
+                                    <i class="fa fa-save"></i>
+                                    <span class="save-close"><i class="fa fa-times"></i></span>
+                                </button>
+                                <button type="button" *ngIf="service?.Account?.Is_Delete_Solution" (click)="DeleteRow()"
+                                    class="btn btn-sm btn-danger tlp"><i class="fa fa-trash"></i></button>
+                                <button type="button" *ngIf="service?.Account?.Is_Clone_Solution"
+                                    (click)="CloneSolution()" class="btn btn-sm btn-info tlp"><i
+                                        class="fa fa-clone"></i></button>
+                                <a target="_blank" *ngIf="service?.Account?.Is_Print" (click)="Print()"
+                                    class="btn btn-sm btn-info tlp"><i class="fa fa-print"></i></a>
+                                <button type="button" class="btn btn-sm btn-secondary tlp" (click)="BackToList();"><i
+                                        class="fa fa-times"></i>
+                                    {{'btnCancel'| translate:service.CL}}</button>
+                            </div>
+                            <div class="modal-body1">
+                                <div class="form-box row">
+                                    <div class="col-12 col-xl-4 col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-5 col-md-4 col-form-label">{{'lblSolutionID'|
+                                                translate:service.CL}} </label>
+                                            <div class="col-7 col-md-8 col-form-label">
+                                                <b>{{SolutionForm.controls.DisplaySolutionID.value}}</b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-8"></div>
+                                    <div class="col-12 col-xl-4 col-md-6">
+                                        <div class="form-group row"
+                                            [ngClass]="{'has-error': f.submitted && !SolutionForm.controls.CategoryID.valid}">
+                                            <label class="col-12 col-md-4 col-form-label">{{'lblCategory'|
+                                                translate:service.CL}} <span class="text-danger">*</span></label>
+                                            <div class="col-12 col-md-8">
+                                                <select #focus class="form-control custom-select"
+                                                    formControlName="CategoryID"
+                                                    (change)="Change_Category($event.target.value)">
+                                                    <option value="0">{{'lblSelect'| translate:service.CL}}</option>
+                                                    <option *ngFor="let item of model?.CategoryList"
+                                                        [value]="item.Value">{{item.Key}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-xl-4 col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-md-4 col-form-label">{{'lblSubCategory'|
+                                                translate:service.CL}}</label>
+                                            <div class="col-12 col-md-8">
+                                                <select class="form-control custom-select"
+                                                    formControlName="SubCategoryID"
+                                                    (change)="Change_SubCategory($event.target.value)">
+                                                    <option value="0">{{'lblSelect'| translate:service.CL}}</option>
+                                                    <option *ngFor="let item of Filter_SubCategory_List"
+                                                        [value]="item.Value">{{item.Key}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-xl-4 col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-12 col-md-4 col-form-label">{{'lblItem'|
+                                                translate:service.CL}}</label>
+                                            <div class="col-12 col-md-8">
+                                                <select class="form-control custom-select" formControlName="ItemID">
+                                                    <option value="0">{{'lblSelect'| translate:service.CL}}</option>
+                                                    <option *ngFor="let item of Filter_ItemList" [value]="item.Value">
+                                                        {{item.Key}}</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6"></div>
+                                    <div class="col-12 form-group"
+                                        [ngClass]="{'has-error': f.submitted && !SolutionForm.controls.Subject.valid}">
+                                        <label>{{'lblSubject'| translate:service.CL}} <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" formControlName="Subject"
+                                            placeholder="{{'lblEnter'| translate:service.CL}} {{'lblSubject'| translate:service.CL}}" />
+                                    </div>
+                                    <div class="col-12 form-group editor-height">
+                                        <label>{{'lblSolution'| translate:service.CL}} <span
+                                                class="text-danger">*</span></label>
+                                        <textarea id="txtDesc" class="form-control kendoEditor"
+                                            formControlName="Description"
+                                            placeholder="{{'lblEnter'| translate:service.CL}} {{'lblSolution'| translate:service.CL}}"></textarea>
+                                    </div>
+
+                                    <div class="col-12 col-md-6 form-group">
+                                        <label>{{'lblKeywords'| translate:service.CL}}</label>
+                                        <textarea class="form-control min-ht-60" formControlName="MetaKeywords"
+                                            placeholder="{{'lblEnter'| translate:service.CL}} {{'lblKeywords'| translate:service.CL}}"></textarea>
+                                        <small class="text-muted">{{'lblKeywordsNote1'| translate:service.CL}}</small>
+                                        <br />
+                                        <small class="text-muted">{{'lblKeywordsNote2'| translate:service.CL}}</small>
+                                    </div>
+                                    <div class="col-12 col-md-6 form-group">
+                                        <label>{{'lblComments'| translate:service.CL}}</label>
+                                        <textarea class="form-control min-ht-100" formControlName="Comments"
+                                            placeholder="{{'lblEnter'| translate:service.CL}} {{'lblComments'| translate:service.CL}}"></textarea>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Client_Visible" type="checkbox"
+                                                formControlName="Is_Client_Visible" class="custom-control-input">
+                                            <label class="custom-control-label"
+                                                for="frmIs_Client_Visible">{{'lblIsClientVisible'|
+                                                translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-12 col-md-6 form-group">
+                                        <div class="custom-control custom-checkbox">
+                                            <input id="frmIs_Active" type="checkbox" formControlName="Is_Active"
+                                                class="custom-control-input">
+                                            <label class="custom-control-label" for="frmIs_Active">{{'lblIsActive'|
+                                                translate:service.CL}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-5 mb-2 d-flex justify-content-between">
+                                        <h5>{{'lblAttachments'| translate:service.CL}}</h5>
+                                        <button type="button" class="btn btn-info btn-sm"
+                                            (click)="flAttachment.click();">
+                                            <i *ngIf="isAttachLoading" class="fa fa-circle-notch fa-spin mr-1"></i>
+                                            {{'lblUploadFiles'| translate:service.CL}}
+                                        </button>
+                                        <input #flAttachment type="file" multiple (change)="fileChange($event)"
+                                            class="hide" />
+                                    </div>
+                                    <div class="col-12 form-group">
+                                        <div class="table-responsive">
+                                            <table
+                                                class="table table-bordered table-striped small-btn table-attachment">
+                                                <tr *ngFor="let item of AttachmentList">
+                                                    <td>
+                                                        <i class="mr-2" [ngClass]="item.Extension | fileType"></i>
+                                                        <a target="_blank"
+                                                            href="{{service?.Settings?.Base_API_URL + '/Documents/Attachments/Solution/' + item.FileName}}">
+                                                            {{item.DisplayName}}</a>
+                                                    </td>
+                                                    <td width="4%">
+                                                        <button type="button" class="btn btn-xs btn-danger"
+                                                            (click)="RemoveAttachment(item,'old')">{{'lblRemove'|
+                                                            translate:service.CL}}</button>
+                                                    </td>
+                                                </tr>
+                                                <tr *ngFor="let file of lstAttachments;let i = index;"
+                                                    class="bg-light-yellow ">
+                                                    <td>
+                                                        <i class="mr-2" [ngClass]="file.extension | fileType"></i>
+                                                        {{file.name}}
+                                                    </td>
+                                                    <td width="4%">
+                                                        <button type="button" class="btn btn-xs btn-danger"
+                                                            (click)="RemoveAttachment(file,'new')">{{'lblRemove'|
+                                                            translate:service.CL}}</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer form-btn mt-4 pb-0 prl-0">
+                                <button type="submit" class="btn btn-sm btn-primary tlp"><i
+                                        class="fa fa-save"></i></button>
+                                <button type="submit" class="btn btn-sm btn-primary tlp"
+                                    (click)="Is_SaveAndclose = true;">
+                                    <i class="fa fa-save"></i>
+                                    <span class="save-close"><i class="fa fa-times"></i></span>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-secondary tlp" (click)="BackToList();"><i
+                                        class="fa fa-times"></i>
+                                    {{'btnCancel'| translate:service.CL}}</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<user-technician (onSave)="UserSelectDone($event)" #UserSelect></user-technician>

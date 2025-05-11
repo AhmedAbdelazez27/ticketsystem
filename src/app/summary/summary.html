@@ -1,0 +1,346 @@
+﻿<div class="main-panel" style="width:100%;">
+    <div class="row breadcrumb">
+        <div class="col-12">
+            <a class="link">{{'lblHome'| translate:service.CL}}</a> <i class="fa fa-angle-double-right"></i><span>
+                {{'lblSummary'| translate:service.CL}}</span>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="row">
+            <div class="col-lg-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        <div>{{'lblRequestsBy'| translate:service.CL}} {{'lbl' + ddlRequestType | translate:service.CL}}
+                        </div>
+                        <div class="table-filter summary">
+                            <div class="input-group datepicker mr-2 ml-1">
+                                <!-- <ng2-flatpickr #stDate_Req_By [config]="dtStart_Req_By_Config" altInputClass="form-control"></ng2-flatpickr> -->
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Start Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                                        [(ngModel)]="stDate_Req_By">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <span class="font-13">{{'lblTo'| translate:service.CL}}</span>
+                            <div class="input-group datepicker ml-2 mr-1">
+                                <!-- <ng2-flatpickr #edDate_Req_By [config]="dtEnd_Req_By_Config"
+                                    altInputClass="form-control"></ng2-flatpickr> -->
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Start Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                                        [(ngModel)]="edDate_Req_By">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+
+                            </div>
+                            <select class="form-control custom-select" [(ngModel)]="ddlRequestType"
+                                (change)="ddlRequestType_Change()">
+                                <option value="Agent" selected>{{'lblAgent'| translate:service.CL}}</option>
+                                <option value="Status">{{'lblStatus'| translate:service.CL}}</option>
+                                <option value="Category">{{'lblCategory'| translate:service.CL}}</option>
+                                <option value="Priority">{{'lblPriority'| translate:service.CL}}</option>
+                                <option value="Level">{{'lblLevel'| translate:service.CL}}</option>
+                                <option value="Mode">{{'lblMode'| translate:service.CL}}</option>
+                                <option value="Department">{{'lblDepartment'| translate:service.CL}}</option>
+                                <option value="Location">{{'lblLocation'| translate:service.CL}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body min-height">
+                        <!--Start Common Grid-->
+                        <div style="position:relative;">
+                            <commongrid *ngIf="lst_TicketCount_ByType_Model?.length > 0"
+                                [records]="lst_TicketCount_ByType_Model" [gridfilter]="gridFilter" [pagesize]="10"
+                                [ShowSorting]="true" [PagingType]="'nextprevnumberadvanced'">
+                            </commongrid>
+                            <div *ngIf="!isLoading && lst_TicketCount_ByType_Model.length == 0">
+                                <span>{{'lblNoData'| translate:service.CL}}</span>
+                            </div>
+                        </div>
+                        <div *ngIf="isLoading" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        <div>{{'lblRequestSummary'| translate:service.CL}}</div>
+                        <div class="table-filter summary">
+                            <div class="dropdown mr-1">
+                                <button type="button" class="btn btn-sm btn-secondary ml-1" title="Chart" id="export"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-chart-bar"></i> <i class="fa fa-angle-down ml-1"></i>
+                                </button>
+                                <div class="dropdown-menu cursor font-13">
+                                    <div class="dropdown-item" [class.active]="ddlChartSummary=='column2d'"
+                                        (click)="ddlChartSummary='column2d';ddlChartSummary_Change()">
+                                        {{'lblColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartSummary=='stackedcolumn2d'"
+                                        (click)="ddlChartSummary='stackedcolumn2d';ddlChartSummary_Change()">
+                                        {{'lblStackedColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartSummary=='bar2d'"
+                                        (click)="ddlChartSummary='bar2d';ddlChartSummary_Change()">{{'lblBarChart'|
+                                        translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartSummary=='stackedbar2d'"
+                                        (click)="ddlChartSummary='stackedbar2d';ddlChartSummary_Change()">
+                                        {{'lblStackedBarChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartSummary=='line'"
+                                        (click)="ddlChartSummary='line';ddlChartSummary_Change()">{{'lblLineChart'|
+                                        translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartSummary=='radar'"
+                                        (click)="ddlChartSummary='radar';ddlChartSummary_Change()">{{'lblRadarChart'|
+                                        translate:service.CL}}</div>
+                                </div>
+                            </div>
+                            <select class="form-control custom-select" [(ngModel)]="ddlTicketSummary"
+                                (change)="ddlTicketSummary_Change()">
+                                <option value="thisweek" selected>{{'lblThisWeek'| translate:service.CL}}</option>
+                                <option value="lastweek">{{'lblLastWeek'| translate:service.CL}}</option>
+                                <option value="thismonth">{{'lblThisMonth'| translate:service.CL}}</option>
+                                <option value="lastmonth">{{'lblLastMonth'| translate:service.CL}}</option>
+                                <option value="thisyear">{{'lblThisYear'| translate:service.CL}}</option>
+                                <option value="lastyear">{{'lblLastYear'| translate:service.CL}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body overflow_chart min-height">
+                        <div *ngIf="lst_TicketSummary_ByType_Model?.length > 0">
+                            <!-- <canvas baseChart #columnChart="base-chart" height="350" [datasets]="ColumnChartData"
+                                [labels]="ColumnChartLabels" [options]="columnChartOptions" [chartType]="chartType"
+                                [colors]="fixBarColors"></canvas> -->
+
+                            <canvas baseChart #columnChart="base-chart" height="350" [datasets]="ColumnChartData"
+                                [labels]="ColumnChartLabels" [options]="columnChartOptions"></canvas>
+
+                        </div>
+                        <div *ngIf="isLoading_summary" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        <div>{{'lblTicketsReceivedInLast'| translate:service.CL}} {{ddlReceived_Days}} {{'lblDays'|
+                            translate:service.CL}}</div>
+                        <div class="table-filter summary">
+                            <div class="dropdown mr-1">
+                                <button type="button" class="btn btn-sm btn-secondary ml-1" title="Chart" id="export"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-chart-bar"></i> <i class="fa fa-angle-down ml-1"></i>
+                                </button>
+                                <div class="dropdown-menu cursor font-13">
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Received=='column2d'"
+                                        (click)="ddlChartType_Received='column2d';ddlChartReceived_Days_Change()">
+                                        {{'lblColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Received=='stackedcolumn2d'"
+                                        (click)="ddlChartType_Received='stackedcolumn2d';ddlChartReceived_Days_Change()">
+                                        {{'lblStackedColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Received=='bar2d'"
+                                        (click)="ddlChartType_Received='bar2d';ddlChartReceived_Days_Change()">
+                                        {{'lblBarChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Received=='stackedbar2d'"
+                                        (click)="ddlChartType_Received='stackedbar2d';ddlChartReceived_Days_Change()">
+                                        {{'lblStackedBarChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Received=='line'"
+                                        (click)="ddlChartType_Received='line';ddlChartReceived_Days_Change()">
+                                        {{'lblLineChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Received=='radar'"
+                                        (click)="ddlChartType_Received='radar';ddlChartReceived_Days_Change()">
+                                        {{'lblRadarChart'| translate:service.CL}}</div>
+                                </div>
+                            </div>
+                            <select class="form-control custom-select" [(ngModel)]="ddlReceived_Days"
+                                (change)="ddlReceived_Days_Change()">
+                                <option value="10" selected>{{'lblLast10Days'| translate:service.CL}}</option>
+                                <option value="20">{{'lblLast20Days'| translate:service.CL}}</option>
+                                <option value="30">{{'lblLast30Days'| translate:service.CL}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body overflow_chart min-height">
+                        <div *ngIf="lst_TicketReceived_ByDays_Model?.length > 0">
+                            <!-- <canvas baseChart #columnChart_Received="base-chart" height="350"
+                                [datasets]="TicketReceivedChartData" [labels]="ColumnChartLabels_Received"
+                                [options]="columnChartOptions_Received" [chartType]="chartType_Received"
+                                [colors]="fixBarColors"></canvas> -->
+
+                            <canvas baseChart #columnChart_Received="base-chart" height="350"
+                                [datasets]="TicketReceivedChartData" [labels]="ColumnChartLabels_Received"
+                                [options]="columnChartOptions_Received"></canvas>
+                        </div>
+                        <div *ngIf="isLoading_Received" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        <div>{{'lblTicketsClosedInLast'| translate:service.CL}} {{ddlClosed_Days}} {{'lblDays'|
+                            translate:service.CL}}</div>
+                        <div class="table-filter summary">
+                            <div class="dropdown mr-1">
+                                <button type="button" class="btn btn-sm btn-secondary ml-1" title="Chart" id="export"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-chart-bar"></i> <i class="fa fa-angle-down ml-1"></i>
+                                </button>
+                                <div class="dropdown-menu cursor font-13">
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Closed=='column2d'"
+                                        (click)="ddlChartType_Closed='column2d';ddlChartClosed_Days_Change()">
+                                        {{'lblColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Closed=='stackedcolumn2d'"
+                                        (click)="ddlChartType_Closed='stackedcolumn2d';ddlChartClosed_Days_Change()">
+                                        {{'lblStackedColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Closed=='bar2d'"
+                                        (click)="ddlChartType_Closed='bar2d';ddlChartClosed_Days_Change()">
+                                        {{'lblBarChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Closed=='stackedbar2d'"
+                                        (click)="ddlChartType_Closed='stackedbar2d';ddlChartClosed_Days_Change()">
+                                        {{'lblStackedBarChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Closed=='line'"
+                                        (click)="ddlChartType_Closed='line';ddlChartClosed_Days_Change()">
+                                        {{'lblLineChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartType_Closed=='radar'"
+                                        (click)="ddlChartType_Closed='radar';ddlChartClosed_Days_Change()">
+                                        {{'lblRadarChart'| translate:service.CL}}</div>
+                                </div>
+                            </div>
+                            <select class="form-control custom-select" [(ngModel)]="ddlClosed_Days"
+                                (change)="ddlClosed_Days_Change()">
+                                <option value="10" selected>{{'lblLast10Days'| translate:service.CL}}</option>
+                                <option value="20">{{'lblLast20Days'| translate:service.CL}}</option>
+                                <option value="30">{{'lblLast30Days'| translate:service.CL}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body overflow_chart min-height">
+                        <div *ngIf="lst_TicketClosed_ByDays_Model?.length > 0">
+                            <!-- <canvas baseChart #columnChart_Closed="base-chart" height="350"
+                                [datasets]="TicketClosedChartData" [labels]="ColumnChartLabels_Closed"
+                                [options]="columnChartOptions_Closed" [chartType]="chartType_Closed"
+                                [colors]="fixBarColors"></canvas> -->
+
+                            <canvas baseChart #columnChart_Closed="base-chart" height="350"
+                                [datasets]="TicketClosedChartData" [labels]="ColumnChartLabels_Closed"
+                                [options]="columnChartOptions_Closed"></canvas>
+
+                        </div>
+                        <div *ngIf="isLoading_Closed" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-lg-6 grid-margin">
+                <div class="card full-height">
+                    <div class="card-title">
+                        <div>{{'lblOpenTicketBy'| translate:service.CL}} {{'lbl' + ddlOpenTicketType |
+                            translate:service.CL}}</div>
+                        <div class="table-filter summary">
+                            <div class="input-group datepicker mr-2 ml-1">
+                                <!-- <ng2-flatpickr #stDate_OpT [config]="dtStart_OpT_Config"
+                                    altInputClass="form-control"></ng2-flatpickr> -->
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Start Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                                        [(ngModel)]="stDate_OpT">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+
+                            </div>
+                            <span class="font-13">{{'lblTo'| translate:service.CL}}</span>
+                            <div class="input-group datepicker ml-2 mr-1">
+                                <!-- <ng2-flatpickr #edDate_OpT [config]="dtStart_OpT_Config"
+                                    altInputClass="form-control"></ng2-flatpickr> -->
+
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Start Date</mat-label>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choose a date"
+                                        [(ngModel)]="edDate_OpT">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+
+                            </div>
+
+                            <div class="dropdown mr-1">
+                                <button type="button" class="btn btn-sm btn-secondary ml-1" title="Chart" id="export"
+                                    data-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-chart-bar"></i> <i class="fa fa-angle-down ml-1"></i>
+                                </button>
+                                <div class="dropdown-menu cursor font-13">
+                                    <div class="dropdown-item" [class.active]="ddlChartOpenTicket=='pie'"
+                                        (click)="ddlChartOpenTicket='pie';ddlChartOpenTicket_Change()">{{'lblPieChart'|
+                                        translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartOpenTicket=='donut'"
+                                        (click)="ddlChartOpenTicket='donut';ddlChartOpenTicket_Change()">
+                                        {{'lblDonutChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartOpenTicket=='column2d'"
+                                        (click)="ddlChartOpenTicket='column2d';ddlChartOpenTicket_Change()">
+                                        {{'lblColumnChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartOpenTicket=='bar2d'"
+                                        (click)="ddlChartOpenTicket='bar2d';ddlChartOpenTicket_Change()">
+                                        {{'lblBarChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartOpenTicket=='line'"
+                                        (click)="ddlChartOpenTicket='line';ddlChartOpenTicket_Change()">
+                                        {{'lblLineChart'| translate:service.CL}}</div>
+                                    <div class="dropdown-item" [class.active]="ddlChartOpenTicket=='radar'"
+                                        (click)="ddlChartOpenTicket='radar';ddlChartOpenTicket_Change()">
+                                        {{'lblRadarChart'| translate:service.CL}}</div>
+                                </div>
+                            </div>
+                            <select class="form-control custom-select" [(ngModel)]="ddlOpenTicketType"
+                                (change)="ddlOpenTicketType_Change()">
+                                <option value="Status">{{'lblStatus'| translate:service.CL}}</option>
+                                <option value="Category">{{'lblCategory'| translate:service.CL}}</option>
+                                <option value="Priority">{{'lblPriority'| translate:service.CL}}</option>
+                                <option value="Level">{{'lblLevel'| translate:service.CL}}</option>
+                                <option value="Mode">{{'lblMode'| translate:service.CL}}</option>
+                                <option value="Department">{{'lblDepartment'| translate:service.CL}}</option>
+                                <option value="Location">{{'lblLocation'| translate:service.CL}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="card-body overflow_chart min-height">
+                        <div *ngIf="lst_OpenTicket_ByType_Model?.length > 1">
+                            <!-- <canvas baseChart #OpenTicketChart="base-chart" height="350"
+                                [datasets]="OpenTicketChartData" [labels]="OpenTicketChartLabels"
+                                [options]="OpenTicketChartOptions" [chartType]="chartType_OpenTicket"></canvas>
+                                 -->
+
+                            <canvas baseChart #OpenTicketChart="base-chart" height="350"
+                                [datasets]="OpenTicketChartData" [labels]="OpenTicketChartLabels"
+                                [options]="OpenTicketChartOptions"></canvas>
+                        </div>
+                        <div class="nodata border-0"
+                            *ngIf="!isLoading_OpTicket && lst_OpenTicket_ByType_Model?.length <= 1">
+                            <span>{{'lblNoData'| translate:service.CL}}</span>
+                        </div>
+                        <div *ngIf="isLoading_OpTicket" class="overlay-inner">
+                            <i class="fa fa-circle-notch fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
