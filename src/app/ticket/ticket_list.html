@@ -1,4 +1,4 @@
-﻿<div class="main-panel" style="width:100%;">
+﻿<!-- <div class="main-panel" style="width:100%;">
     <div class="row breadcrumb">
         <div class="col-12 col-md-6 title">
             {{'lblTicketList'| translate:service.CL}}
@@ -180,4 +180,89 @@
     </form>
 </modal-dialog>
 
-<row-view #RowView></row-view>
+<row-view #RowView></row-view> -->
+<div class="white-box">
+                <div class="d-lg-flex justify-content-between">
+                    <div class="d-flex gap-2 mb-4 filter">
+                        <select class="form-select filter-select" aria-label="Default select example">
+                            <option selected>Filter</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <input type="text" id="inputPassword5" class="form-control filter-search" aria-describedby="passwordHelpBlock" placeholder="Search...">
+
+                    </div>
+                    <div class="d-flex gap-2 mb-4">
+                        <button class="btn btn-filter-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M19 19C19.5523 19 20 19.4477 20 20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20C4 19.4477 4.44772 19 5 19H19ZM18.003 3.58492L19.4151 4.99703C20.195 5.77692 20.195 7.04137 19.4151 7.82126L11.1778 16.0586C11.025 16.2114 10.8268 16.3105 10.6129 16.341L6 17L6.65899 12.3871C6.68954 12.1732 6.78864 11.975 6.94141 11.8222L15.1787 3.58492C15.9586 2.80503 17.2231 2.80503 18.003 3.58492ZM16.5909 4.99703L8.58911 12.9988L8.35399 14.646L10.0012 14.4109L18.003 6.40914L16.5909 4.99703Z" fill="#1E5EFF" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-filter-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path d="M8 21C7.45 21 6.97933 20.8043 6.588 20.413C6.19667 20.0217 6.00067 19.5507 6 19V17H4C3.45 17 2.97933 16.8043 2.588 16.413C2.19667 16.0217 2.00067 15.5507 2 15V11C2 10.15 2.29167 9.43767 2.875 8.863C3.45833 8.28833 4.16667 8.00067 5 8H19C19.85 8 20.5627 8.28767 21.138 8.863C21.7133 9.43833 22.0007 10.1507 22 11V15C22 15.55 21.8043 16.021 21.413 16.413C21.0217 16.805 20.5507 17.0007 20 17H18V19C18 19.55 17.8043 20.021 17.413 20.413C17.0217 20.805 16.5507 21.0007 16 21H8ZM4 15H6C6 14.45 6.196 13.9793 6.588 13.588C6.98 13.1967 7.45067 13.0007 8 13H16C16.55 13 17.021 13.196 17.413 13.588C17.805 13.98 18.0007 14.4507 18 15H20V11C20 10.7167 19.904 10.4793 19.712 10.288C19.52 10.0967 19.2827 10.0007 19 10H5C4.71667 10 4.47933 10.096 4.288 10.288C4.09667 10.48 4.00067 10.7173 4 11V15ZM16 8V5H8V8H6V5C6 4.45 6.196 3.97933 6.588 3.588C6.98 3.19667 7.45067 3.00067 8 3H16C16.55 3 17.021 3.196 17.413 3.588C17.805 3.98 18.0007 4.45067 18 5V8H16ZM18 12.5C18.2833 12.5 18.521 12.404 18.713 12.212C18.905 12.02 19.0007 11.7827 19 11.5C18.9993 11.2173 18.9033 10.98 18.712 10.788C18.5207 10.596 18.2833 10.5 18 10.5C17.7167 10.5 17.4793 10.596 17.288 10.788C17.0967 10.98 17.0007 11.2173 17 11.5C16.9993 11.7827 17.0953 12.0203 17.288 12.213C17.4807 12.4057 17.718 12.5013 18 12.5ZM16 19V15H8V19H16Z" fill="#1E5EFF" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-filter-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M18 8V19C18 20.1046 17.1046 21 16 21H8C6.89543 21 6 20.1046 6 19V8H18ZM16 10H8V19H16V10ZM12 3C12.5523 3 13 3.44772 13 4V5H18C18.5523 5 19 5.44772 19 6C19 6.55228 18.5523 7 18 7H6C5.44772 7 5 6.55228 5 6C5 5.44772 5.44772 5 6 5H11V4C11 3.44772 11.4477 3 12 3Z" fill="#FF0000" />
+                            </svg>
+                        </button>
+                        <button class="btn btn-filter-text">
+                            Export
+                        </button>
+                        <button class="btn btn-filter-blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M7 0C7.55228 0 8 0.447715 8 1V5.999L13 6C13.5523 6 14 6.44772 14 7C14 7.55228 13.5523 8 13 8L8 7.999V13C8 13.5523 7.55228 14 7 14C6.44772 14 6 13.5523 6 13V7.999L1 8C0.447715 8 0 7.55228 0 7C0 6.44772 0.447715 6 1 6L6 5.999V1C6 0.447715 6.44772 0 7 0Z" fill="white" />
+                            </svg>
+                            Add New
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped main-table">
+                        <thead>
+                            <tr>
+                                <th scope="col"><input class="form-check-input" type="checkbox" value="" id="checkDefault"></th>
+                                <th scope="col">First</th>
+                                <th scope="col">Last</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Handle</th>
+                                <th scope="col">Handle</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" value="" id="checkDefault"></td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td><div class="status-green">High</div></td>
+                                <td>Otto</td>
+                            </tr>
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" value="" id="checkDefault"></td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td><div class="status-orange">High</div></td>
+                                <td>Otto</td>
+                            </tr>
+                            <tr>
+                                <td><input class="form-check-input" type="checkbox" value="" id="checkDefault"></td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td>Otto</td>
+                                <td><div class="status-red">High</div></td>
+                                <td>Otto</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>

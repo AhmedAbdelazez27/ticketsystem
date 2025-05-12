@@ -12,6 +12,8 @@ import { SharedModule } from "./shared/shared.module";
 
 //Layout
 import { SidenavComponent } from "./layout/sidenav";
+import { SidebarComponent } from "./layout/sidebar/sidebar.component";
+import { NavbarComponent } from "./layout/navbar/navbar.component";
 import { HeaderComponent } from "./layout/header";
 import { FooterComponent } from "./layout/footer";
 
@@ -54,6 +56,7 @@ export const MY_DATE_FORMATS = {
   declarations: [
     AppComponent,
     SidenavComponent,
+    SidebarComponent,
     HeaderComponent,
     FooterComponent,
     LoginComponent,
@@ -62,6 +65,7 @@ export const MY_DATE_FORMATS = {
     Reset_PasswordComponent,
     PageNotFoundComponent,
     Requester_ProfileComponent,
+    NavbarComponent
   ],
   bootstrap: [AppComponent],
   imports: [

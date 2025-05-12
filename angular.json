@@ -20,28 +20,25 @@
               "ng2-charts",
               "chart.js"
             ],
-            "outputPath": {
-              "base": "dist",
-              "media": "assetsimages"
-            },
+            "outputPath": "dist",  // تعديل هنا
             "index": "index.html",
             "polyfills": ["src/polyfills.ts"],
             "tsConfig": "tsconfig.json",
             "assets": [
-              //static folders/files path
               "src/images/favicon.ico",
-              //,"src/assets"
               "src/assets/images",
-              "src/.htaccess", // for rewrite url in php server
-              "src/Web.config" // for rewrite url in window server
+              "src/.htaccess",  // for rewrite url in php server
+              "src/Web.config"  // for rewrite url in windows server
             ],
             "styles": [
-              "src/assets/css/font-awesome.min.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "node_modules/bootstrap/scss/bootstrap.scss",
+              // "src/assets/css/font-awesome.min.css",
               "src/assets/css/flatpickr.css",
               "src/assets/kendo/kendo.common-material.min.css",
               "src/assets/kendo/kendo.material.min.css",
-              //"src/assets/css/tooltipster.min.css",
               "src/assets/css/jquery.webui-popover.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/assets/css/common.css",
               "src/assets/css/style.css"
             ],
@@ -51,9 +48,10 @@
               "src/assets/js/base64js.min.js",
               "src/assets/js/bootstrap-dropdown.min.js",
               "src/assets/kendo/kendo.all.min.js",
-              //"src/assets/js/tooltipster.min.js",
-              "src/assets/js/jquery.webui-popover.min.js"
-              //"node_modules/flatpickr/dist/plugins/monthSelect/index.js" //month/year flatpickr datepicker plugin
+              "src/assets/js/jquery.webui-popover.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js",
+              "node_modules/jquery/dist/jquery.min.js"
             ],
             "aot": false,
             "extractLicenses": false,
@@ -70,9 +68,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "bundles", //"all"
+              "outputHashing": "bundles", 
               "sourceMap": false,
-              //"extractCss": true,
               "namedChunks": false,
               "aot": true,
               "budgets": [

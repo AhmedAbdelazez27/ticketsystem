@@ -1,14 +1,15 @@
 import { AfterViewInit, Component } from '@angular/core';
+
 import { Tooltip } from 'bootstrap';  // Correct import for Bootstrap components
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.css']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrl: './navbar.component.css'
 })
-export class SidebarComponent implements AfterViewInit {
+export class NavbarComponent implements AfterViewInit{
 
-  // Lifecycle hook that is triggered after the view is initialized
+    // Lifecycle hook that is triggered after the view is initialized
   ngAfterViewInit(): void {
     this.initializeTooltips();
   }
@@ -19,11 +20,10 @@ export class SidebarComponent implements AfterViewInit {
     tooltipTriggerList.forEach(tooltipTriggerEl => {
       new Tooltip(tooltipTriggerEl);  // Create tooltip instance
     });
-  };
+  }
 
   toggleSidebar() {
             const sidebar = document.querySelector('.sidebar');
             sidebar.classList.toggle('collapsed');
         }
 }
-

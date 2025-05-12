@@ -1,6 +1,4 @@
-﻿
-
-<div class="container-scroller">
+﻿<!-- <div class="container-scroller">
     <alert></alert>
     <app-header *ngIf="service?.Account?.UserID > 0" style="height:58px;display:inherit;"></app-header>
     <div class="container-fluid page-body-wrapper" [ngClass]="service?.Account?.UserID > 0 ? '' : 'full-page-wrapper'">
@@ -8,7 +6,57 @@
         <router-outlet></router-outlet>
     </div>
     <app-footer *ngIf="service?.Account?.UserID > 0"></app-footer>
-</div>
+</div> -->
+<!-- <main class="d-flex flex-nowrap">
+   
+    <app-sidebar *ngIf="service?.Account?.UserID > 0"></app-sidebar>
+    
+
+    
+    <div class="container-fluid" style="overflow-y: scroll;">
+        <app-navbar *ngIf="service?.Account?.UserID > 0"></app-navbar>
+
+        
+        <router-outlet></router-outlet>
+    </div>
+</main> -->
+<main class="d-flex flex-nowrap">
+
+    <!-- sidebar start  -->
+    <ng-container *ngIf="service?.Account?.UserID > 0">
+        <div class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary sidebar">
+            <app-sidebar></app-sidebar>
+
+
+        </div>
+    </ng-container>
+    <!-- sidebar end  -->
+
+    <div class="container-fluid" style=" overflow-y: auto;">
+        <!-- this nav bar will appear as a component when signed user -->
+         <ng-container *ngIf="service?.Account?.UserID > 0">
+             <app-navbar></app-navbar>
+         </ng-container>
+
+        <!-- start of this  main routing out lit -->
+        <router-outlet></router-outlet>
+        <!-- end of this main routing out lit   -->
+
+    </div>
+
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="main_loader app_loader" *ngIf="service?.App?.AppLoader">
     <div class="background">
         <div class="wrapper">
